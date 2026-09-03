@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GymTrack | Treino em andamento</title>
+
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/treinos.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <a href="dashboard.html" class="sidebar-logo">
+                <span class="logo-icon">G</span>
+                <span>GYMTRACK</span>
+            </a>
+
+            <nav class="sidebar-nav">
+
+                <a href="dashboard.html" class="nav-item">
+                    <i data-lucide="layout-dashboard" class="nav-icon"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="treinos.html" class="nav-item active">
+                    <i data-lucide="dumbbell" class="nav-icon"></i>
+                    <span>Meus treinos</span>
+                </a>
+
+                <a href="progresso.html" class="nav-item">
+                    <i data-lucide="chart-no-axes-column-increasing" class="nav-icon"></i>
+                    <span>Progresso</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+
+                <a href="perfil.html" class="nav-item">
+                    <i data-lucide="user-round" class="nav-icon"></i>
+                    <span>Perfil</span>
+                </a>
+
+                <a href="../index.html" class="nav-item logout">
+                    <i data-lucide="log-out" class="nav-icon"></i>
+                    <span>Sair</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN -->
+        <main class="active-workout-main">
+
+            <!-- HEADER -->
+            <header class="active-workout-header">
+
+                <div>
+
+                    <span class="page-eyebrow">
+                        TREINO EM ANDAMENTO
+                    </span>
+
+                    <h1 id="workout-title">
+                        Pernas & Glúteos
+                    </h1>
+
+                    <p id="exercise-counter">
+                        Exercício 1 de 4
+                    </p>
+
+                </div>
+
+
+                <div class="workout-timer">
+
+                    <i data-lucide="timer"></i>
+
+                    <div>
+                        <span>TEMPO DE TREINO</span>
+                        <strong id="workout-time">00:00</strong>
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PROGRESS -->
+            <section class="workout-progress-section">
+
+                <div class="workout-progress-info">
+
+                    <span>Progresso do treino</span>
+
+                    <strong id="workout-progress-text">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <div class="workout-progress-bar">
+
+                    <div
+                        class="workout-progress-fill"
+                        id="workout-progress-fill"
+                    ></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- EXERCISE -->
+            <section class="current-exercise-card">
+
+                <div class="current-exercise-header">
+
+                    <div class="exercise-position">
+                        <span id="exercise-number">01</span>
+                    </div>
+
+
+                    <div class="current-exercise-title">
+
+                        <span>EXERCÍCIO ATUAL</span>
+
+                        <h2 id="exercise-name">
+                            Agachamento
+                        </h2>
+
+                    </div>
+
+
+                    <div class="exercise-target">
+
+                        <span>META</span>
+
+                        <strong id="exercise-target">
+                            4 séries × 10 repetições
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- OBSERVAÇÃO -->
+
+                <div
+                    class="exercise-observation"
+                    id="exercise-observation"
+                >
+                    <i data-lucide="info"></i>
+
+                    <span>
+                        Controle a descida e mantenha a postura.
+                    </span>
+                </div>
+
+
+                <!-- SERIES -->
+
+                <div class="series-section">
+
+                    <div class="series-heading">
+
+                        <span>SÉRIE</span>
+                        <span>REPETIÇÕES</span>
+                        <span>CARGA</span>
+                        <span>STATUS</span>
+
+                    </div>
+
+
+                    <div
+                        class="series-list"
+                        id="series-list"
+                    ></div>
+
+                </div>
+
+
+                <!-- NAVIGATION -->
+
+                <div class="exercise-navigation">
+
+                    <button
+                        type="button"
+                        class="previous-exercise-btn"
+                        id="previous-exercise"
+                    >
+                        <i data-lucide="arrow-left"></i>
+                        Anterior
+                    </button>
+
+
+                    <div class="exercise-dots" id="exercise-dots"></div>
+
+
+                    <button
+                        type="button"
+                        class="next-exercise-btn"
+                        id="next-exercise"
+                    >
+                        Próximo
+                        <i data-lucide="arrow-right"></i>
+                    </button>
+
+                </div>
+
+            </section>
+
+            <!-- REST TIMER -->
+<div class="rest-timer" id="rest-timer">
+
+    <div class="rest-timer-info">
+
+        <div class="rest-timer-icon">
+            <i data-lucide="timer"></i>
+        </div>
+
+        <div>
+            <span>DESCANSO</span>
+
+            <strong id="rest-time">
+                01:00
+            </strong>
+        </div>
+
+    </div>
+
+
+    <div class="rest-timer-progress">
+
+        <div
+            class="rest-timer-progress-fill"
+            id="rest-progress"
+        ></div>
+
+    </div>
+
+
+    <button
+        type="button"
+        class="skip-rest-btn"
+        id="skip-rest"
+    >
+        Pular descanso
+        <i data-lucide="skip-forward"></i>
+    </button>
+
+</div>
+
+
+            <!-- FOOTER -->
+
+            <div class="active-workout-footer">
+
+                <a
+                    href="treinos.html"
+                    class="leave-workout-btn"
+                >
+                    <i data-lucide="x"></i>
+                    Sair do treino
+                </a>
+
+
+                <button
+                    type="button"
+                    class="finish-workout-btn"
+                    id="finish-workout"
+                >
+                    <i data-lucide="flag"></i>
+                    Finalizar treino
+                </button>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/realizar-treino.js"></script>
+
+</body>
+
+</html>

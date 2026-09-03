@@ -1,0 +1,597 @@
+/* ========================================
+   PROFILE PAGE
+======================================== */
+
+.profile-main {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding: 48px 55px 80px;
+}
+
+
+/* ========================================
+   HEADER
+======================================== */
+
+.profile-page-header {
+    margin-bottom: 35px;
+}
+
+
+.profile-page-header h1 {
+    margin-top: 7px;
+
+    font-size: 2rem;
+
+    letter-spacing: -1px;
+}
+
+
+.profile-page-header p {
+    margin-top: 7px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 0.88rem;
+}
+
+
+/* ========================================
+   SUMMARY
+======================================== */
+
+.profile-summary {
+    min-height: 130px;
+
+    margin-bottom: 42px;
+    padding: 25px;
+
+    display: flex;
+    align-items: center;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    background: var(--color-surface);
+}
+
+
+.profile-avatar {
+    width: 72px;
+    height: 72px;
+
+    margin-right: 18px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(183, 255, 60, 0.2);
+    border-radius: 50%;
+
+    background: rgba(183, 255, 60, 0.08);
+
+    color: var(--color-primary);
+
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+
+.profile-summary-info h2 {
+    font-size: 1.15rem;
+
+    letter-spacing: -0.3px;
+}
+
+
+.profile-summary-info > span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 0.7rem;
+}
+
+
+.profile-badges {
+    margin-top: 12px;
+
+    display: flex;
+    gap: 7px;
+}
+
+
+.profile-badge {
+    height: 27px;
+
+    padding: 0 9px;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    border: 1px solid rgba(183, 255, 60, 0.12);
+    border-radius: 5px;
+
+    background: rgba(183, 255, 60, 0.04);
+
+    color: var(--color-primary);
+
+    font-size: 0.58rem;
+    font-weight: 600;
+}
+
+
+.profile-badge svg {
+    width: 11px;
+    height: 11px;
+}
+
+
+.profile-member {
+    margin-left: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+
+.profile-member span {
+    color: var(--color-text-secondary);
+
+    font-size: 0.52rem;
+    font-weight: 700;
+
+    letter-spacing: 0.8px;
+}
+
+
+.profile-member strong {
+    font-size: 0.7rem;
+}
+
+
+/* ========================================
+   SECTIONS
+======================================== */
+
+.profile-section {
+    margin-bottom: 36px;
+}
+
+
+.profile-section-heading {
+    margin-bottom: 14px;
+
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+
+.profile-section-icon {
+    width: 32px;
+    height: 32px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background: rgba(183, 255, 60, 0.07);
+
+    color: var(--color-primary);
+}
+
+
+.profile-section-icon svg {
+    width: 14px;
+    height: 14px;
+}
+
+
+.profile-section-heading h2 {
+    font-size: 0.76rem;
+    font-weight: 700;
+
+    letter-spacing: 0.7px;
+
+    text-transform: uppercase;
+}
+
+
+.profile-section-heading p {
+    margin-top: 3px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 0.63rem;
+}
+
+
+/* ========================================
+   CARD
+======================================== */
+
+.profile-card {
+    padding: 24px;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    background: var(--color-surface);
+}
+
+
+.profile-form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+
+.profile-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
+.profile-form-group label {
+    color: #d9dce1;
+
+    font-size: 0.68rem;
+    font-weight: 600;
+}
+
+
+/* ========================================
+   INPUT
+======================================== */
+
+.profile-form-group input,
+.profile-select select {
+    width: 100%;
+    height: 43px;
+
+    border: 1px solid var(--color-border);
+    border-radius: 7px;
+
+    outline: none;
+
+    background: #111419;
+
+    color: var(--color-text);
+
+    font-family: inherit;
+    font-size: 0.7rem;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.profile-form-group input {
+    padding: 0 13px;
+}
+
+
+.profile-form-group input:focus,
+.profile-select:focus-within select {
+    border-color: rgba(183, 255, 60, 0.6);
+
+    box-shadow:
+        0 0 0 3px rgba(183, 255, 60, 0.05);
+}
+
+
+/* ========================================
+   SELECT
+======================================== */
+
+.profile-select {
+    position: relative;
+}
+
+
+.profile-select select {
+    padding: 0 40px 0 13px;
+
+    appearance: none;
+
+    cursor: pointer;
+}
+
+
+.profile-select select option {
+    background: #181c21;
+
+    color: var(--color-text);
+}
+
+
+.profile-select svg {
+    width: 13px;
+    height: 13px;
+
+    position: absolute;
+
+    top: 50%;
+    right: 13px;
+
+    transform: translateY(-50%);
+
+    color: var(--color-text-secondary);
+
+    pointer-events: none;
+}
+
+
+/* ========================================
+   PROFILE ACTIONS
+======================================== */
+
+.profile-actions {
+    margin-top: -16px;
+    margin-bottom: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 9px;
+}
+
+
+.profile-cancel-btn,
+.profile-save-btn {
+    height: 40px;
+
+    padding: 0 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    border-radius: 7px;
+
+    font-size: 0.67rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+
+.profile-cancel-btn {
+    border: 1px solid var(--color-border);
+
+    background: transparent;
+
+    color: var(--color-text-secondary);
+}
+
+
+.profile-cancel-btn:hover {
+    background: var(--color-surface);
+
+    color: var(--color-text);
+}
+
+
+.profile-save-btn {
+    border: none;
+
+    background: var(--color-primary);
+
+    color: #0d0f12;
+}
+
+
+.profile-save-btn:hover {
+    background: var(--color-primary-hover);
+}
+
+
+.profile-save-btn svg {
+    width: 13px;
+    height: 13px;
+
+    stroke-width: 2.5;
+}
+
+
+/* ========================================
+   SECURITY
+======================================== */
+
+.security-section {
+    padding-top: 3px;
+}
+
+
+.security-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.security-card > div {
+    display: flex;
+    align-items: center;
+}
+
+
+.security-icon {
+    width: 38px;
+    height: 38px;
+
+    margin-right: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #20252b;
+
+    color: var(--color-text-secondary);
+}
+
+
+.security-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+
+.security-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+
+.security-info strong {
+    font-size: 0.72rem;
+}
+
+
+.security-info span {
+    color: var(--color-text-secondary);
+
+    font-size: 0.62rem;
+}
+
+
+.change-password-btn {
+    height: 36px;
+
+    padding: 0 13px;
+
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+
+    background: transparent;
+
+    color: var(--color-text-secondary);
+
+    font-size: 0.62rem;
+    font-weight: 700;
+
+    transition:
+        border-color 0.2s ease,
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.change-password-btn:hover {
+    border-color: rgba(183, 255, 60, 0.35);
+
+    background: rgba(183, 255, 60, 0.04);
+
+    color: var(--color-primary);
+}
+
+
+/* ========================================
+   DANGER ZONE
+======================================== */
+
+.profile-section-icon.danger {
+    background: rgba(255, 90, 90, 0.07);
+
+    color: #ff7474;
+}
+
+
+.danger-card {
+    padding: 21px 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border: 1px solid rgba(255, 90, 90, 0.16);
+    border-radius: var(--radius-md);
+
+    background: rgba(255, 90, 90, 0.025);
+}
+
+
+.danger-card > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+.danger-card strong {
+    font-size: 0.72rem;
+}
+
+
+.danger-card span {
+    color: var(--color-text-secondary);
+
+    font-size: 0.62rem;
+}
+
+
+.delete-account-btn {
+    height: 36px;
+
+    padding: 0 13px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    border: 1px solid rgba(255, 90, 90, 0.25);
+    border-radius: 6px;
+
+    background: rgba(255, 90, 90, 0.04);
+
+    color: #ff7474;
+
+    font-size: 0.62rem;
+    font-weight: 700;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.delete-account-btn:hover {
+    border-color: #ff7474;
+
+    background: rgba(255, 90, 90, 0.08);
+}
+
+
+.delete-account-btn svg {
+    width: 13px;
+    height: 13px;
+}

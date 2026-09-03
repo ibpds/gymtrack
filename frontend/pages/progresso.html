@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GymTrack | Progresso</title>
+
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/progresso.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <a href="dashboard.html" class="sidebar-logo">
+                <span class="logo-icon">G</span>
+                <span>GYMTRACK</span>
+            </a>
+
+            <nav class="sidebar-nav">
+
+                <a href="dashboard.html" class="nav-item">
+                    <i data-lucide="layout-dashboard" class="nav-icon"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="treinos.html" class="nav-item">
+                    <i data-lucide="dumbbell" class="nav-icon"></i>
+                    <span>Meus treinos</span>
+                </a>
+
+                <a href="progresso.html" class="nav-item active">
+                    <i data-lucide="chart-no-axes-column-increasing" class="nav-icon"></i>
+                    <span>Progresso</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+
+                <a href="perfil.html" class="nav-item">
+                    <i data-lucide="user-round" class="nav-icon"></i>
+                    <span>Perfil</span>
+                </a>
+
+                <a href="../index.html" class="nav-item logout">
+                    <i data-lucide="log-out" class="nav-icon"></i>
+                    <span>Sair</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN -->
+        <main class="progress-main">
+
+            <!-- HEADER -->
+            <header class="progress-page-header">
+
+                <div>
+                    <span class="page-eyebrow">
+                        PROGRESSO
+                    </span>
+
+                    <h1>Sua evolução</h1>
+
+                    <p>
+                        Acompanhe seus resultados, recordes e frequência de treino.
+                    </p>
+                </div>
+
+            </header>
+
+
+            <!-- RESUMO -->
+            <section class="progress-section">
+
+                <div class="section-heading">
+                    <h2>Visão geral</h2>
+                </div>
+
+
+                <div class="progress-stats-grid">
+
+                    <article class="progress-stat-card">
+
+                        <div class="progress-stat-icon">
+                            <i data-lucide="dumbbell"></i>
+                        </div>
+
+                        <div>
+                            <strong id="total-workouts">42</strong>
+                            <span>Treinos realizados</span>
+                        </div>
+
+                    </article>
+
+
+                    <article class="progress-stat-card">
+
+                        <div class="progress-stat-icon">
+                            <i data-lucide="flame"></i>
+                        </div>
+
+                        <div>
+                            <strong id="current-streak">6</strong>
+                            <span>Semanas em sequência</span>
+                        </div>
+
+                    </article>
+
+
+                    <article class="progress-stat-card">
+
+                        <div class="progress-stat-icon">
+                            <i data-lucide="trophy"></i>
+                        </div>
+
+                        <div>
+                            <strong id="personal-records">8</strong>
+                            <span>Recordes pessoais</span>
+                        </div>
+
+                    </article>
+
+
+                    <article class="progress-stat-card">
+
+                        <div class="progress-stat-icon">
+                            <i data-lucide="weight"></i>
+                        </div>
+
+                        <div>
+                            <strong id="total-volume">12.450 kg</strong>
+                            <span>Volume levantado</span>
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- EVOLUÇÃO DE CARGA -->
+            <section class="progress-section">
+
+                <div class="section-heading chart-section-heading">
+
+                    <div>
+                        <h2>Evolução de carga</h2>
+                        <p>
+                            Acompanhe o aumento de carga por exercício.
+                        </p>
+                    </div>
+
+
+                    <div class="exercise-select-wrapper">
+
+                        <i data-lucide="dumbbell"></i>
+
+                        <select id="exercise-select">
+                            <option value="agachamento">
+                                Agachamento
+                            </option>
+
+                            <option value="legpress">
+                                Leg press
+                            </option>
+
+                            <option value="supino">
+                                Supino reto
+                            </option>
+
+                            <option value="remada">
+                                Remada baixa
+                            </option>
+                        </select>
+
+                        <i data-lucide="chevron-down"></i>
+
+                    </div>
+
+                </div>
+
+
+                <article class="main-chart-card">
+
+                    <div class="chart-summary">
+
+                        <div>
+                            <span>CARGA ATUAL</span>
+                            <strong id="current-weight">60 kg</strong>
+                        </div>
+
+                        <div class="chart-growth">
+                            <i data-lucide="trending-up"></i>
+
+                            <span id="weight-growth">
+                                +20 kg no período
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="main-chart-container">
+                        <canvas id="weight-chart"></canvas>
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- FREQUÊNCIA + RECORDES -->
+            <section class="progress-content-grid">
+
+                <!-- FREQUÊNCIA -->
+                <div class="progress-column">
+
+                    <div class="section-heading">
+
+                        <div>
+                            <h2>Frequência</h2>
+                            <p>Treinos realizados nas últimas semanas.</p>
+                        </div>
+
+                    </div>
+
+
+                    <article class="frequency-card">
+
+                        <div class="frequency-chart-container">
+                            <canvas id="frequency-chart"></canvas>
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <!-- RECORDES -->
+                <div class="progress-column">
+
+                    <div class="section-heading">
+
+                        <div>
+                            <h2>Recordes pessoais</h2>
+                            <p>Suas melhores cargas registradas.</p>
+                        </div>
+
+                    </div>
+
+
+                    <article class="records-card">
+
+                        <div class="record-item">
+
+                            <div class="record-icon">
+                                <i data-lucide="trophy"></i>
+                            </div>
+
+                            <div class="record-info">
+                                <strong>Agachamento</strong>
+                                <span>Melhor carga</span>
+                            </div>
+
+                            <strong class="record-value">
+                                60 kg
+                            </strong>
+
+                        </div>
+
+
+                        <div class="record-item">
+
+                            <div class="record-icon">
+                                <i data-lucide="trophy"></i>
+                            </div>
+
+                            <div class="record-info">
+                                <strong>Leg press</strong>
+                                <span>Melhor carga</span>
+                            </div>
+
+                            <strong class="record-value">
+                                100 kg
+                            </strong>
+
+                        </div>
+
+
+                        <div class="record-item">
+
+                            <div class="record-icon">
+                                <i data-lucide="trophy"></i>
+                            </div>
+
+                            <div class="record-info">
+                                <strong>Supino reto</strong>
+                                <span>Melhor carga</span>
+                            </div>
+
+                            <strong class="record-value">
+                                40 kg
+                            </strong>
+
+                        </div>
+
+
+                        <div class="record-item">
+
+                            <div class="record-icon">
+                                <i data-lucide="trophy"></i>
+                            </div>
+
+                            <div class="record-info">
+                                <strong>Remada baixa</strong>
+                                <span>Melhor carga</span>
+                            </div>
+
+                            <strong class="record-value">
+                                55 kg
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- HISTÓRICO -->
+            <section class="progress-section history-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Histórico recente</h2>
+                        <p>Seus últimos treinos realizados.</p>
+                    </div>
+
+                </div>
+
+
+                <article class="history-card">
+
+                    <div class="history-item">
+
+                        <div class="history-icon">
+                            <i data-lucide="dumbbell"></i>
+                        </div>
+
+                        <div class="history-workout">
+                            <strong>Pernas & Glúteos</strong>
+                            <span>Hoje, 08:32</span>
+                        </div>
+
+                        <div class="history-data">
+                            <span>DURAÇÃO</span>
+                            <strong>52 min</strong>
+                        </div>
+
+                        <div class="history-data">
+                            <span>EXERCÍCIOS</span>
+                            <strong>6</strong>
+                        </div>
+
+                        <div class="history-status">
+                            <i data-lucide="check"></i>
+                            Concluído
+                        </div>
+
+                    </div>
+
+
+                    <div class="history-item">
+
+                        <div class="history-icon">
+                            <i data-lucide="dumbbell"></i>
+                        </div>
+
+                        <div class="history-workout">
+                            <strong>Peito & Tríceps</strong>
+                            <span>01 set, 18:40</span>
+                        </div>
+
+                        <div class="history-data">
+                            <span>DURAÇÃO</span>
+                            <strong>48 min</strong>
+                        </div>
+
+                        <div class="history-data">
+                            <span>EXERCÍCIOS</span>
+                            <strong>5</strong>
+                        </div>
+
+                        <div class="history-status">
+                            <i data-lucide="check"></i>
+                            Concluído
+                        </div>
+
+                    </div>
+
+
+                    <div class="history-item">
+
+                        <div class="history-icon">
+                            <i data-lucide="dumbbell"></i>
+                        </div>
+
+                        <div class="history-workout">
+                            <strong>Costas & Bíceps</strong>
+                            <span>30 ago, 09:15</span>
+                        </div>
+
+                        <div class="history-data">
+                            <span>DURAÇÃO</span>
+                            <strong>57 min</strong>
+                        </div>
+
+                        <div class="history-data">
+                            <span>EXERCÍCIOS</span>
+                            <strong>6</strong>
+                        </div>
+
+                        <div class="history-status">
+                            <i data-lucide="check"></i>
+                            Concluído
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/progresso.js"></script>
+
+</body>
+
+</html>

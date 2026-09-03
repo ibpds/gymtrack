@@ -1,0 +1,554 @@
+/* ========================================
+   PROGRESS PAGE
+======================================== */
+
+.progress-main {
+    width: 100%;
+    max-width: 1500px;
+
+    margin: 0 auto;
+
+    padding: 48px 55px 80px;
+}
+
+
+/* ========================================
+   HEADER
+======================================== */
+
+.progress-page-header {
+    margin-bottom: 50px;
+}
+
+
+.progress-page-header h1 {
+    margin-top: 7px;
+
+    font-size: 2rem;
+
+    letter-spacing: -1px;
+}
+
+
+.progress-page-header p {
+    margin-top: 7px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 0.88rem;
+}
+
+
+/* ========================================
+   SECTIONS
+======================================== */
+
+.progress-section {
+    margin-bottom: 42px;
+}
+
+
+.section-heading {
+    margin-bottom: 16px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+
+.section-heading h2 {
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    letter-spacing: 1.1px;
+
+    text-transform: uppercase;
+}
+
+
+.section-heading p {
+    margin-top: 5px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 0.7rem;
+}
+
+
+/* ========================================
+   STATS
+======================================== */
+
+.progress-stats-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 15px;
+}
+
+
+.progress-stat-card {
+    min-height: 92px;
+
+    padding: 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    background: var(--color-surface);
+}
+
+
+.progress-stat-icon {
+    width: 39px;
+    height: 39px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: rgba(183, 255, 60, 0.07);
+
+    color: var(--color-primary);
+}
+
+
+.progress-stat-icon svg {
+    width: 17px;
+    height: 17px;
+}
+
+
+.progress-stat-card > div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+
+.progress-stat-card strong {
+    font-size: 1.35rem;
+
+    letter-spacing: -0.5px;
+}
+
+
+.progress-stat-card span {
+    color: var(--color-text-secondary);
+
+    font-size: 0.65rem;
+}
+
+
+/* ========================================
+   EXERCISE SELECT
+======================================== */
+
+.chart-section-heading {
+    align-items: center;
+}
+
+
+.exercise-select-wrapper {
+    min-width: 180px;
+    height: 38px;
+
+    padding: 0 11px;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    border: 1px solid var(--color-border);
+    border-radius: 7px;
+
+    background: var(--color-surface);
+}
+
+
+.exercise-select-wrapper > svg {
+    width: 13px;
+    height: 13px;
+
+    color: var(--color-text-secondary);
+
+    pointer-events: none;
+}
+
+
+.exercise-select-wrapper > svg:last-child {
+    margin-left: auto;
+}
+
+
+.exercise-select-wrapper select {
+    flex: 1;
+
+    border: none;
+    outline: none;
+
+    appearance: none;
+
+    background: transparent;
+
+    color: var(--color-text);
+
+    font-family: inherit;
+    font-size: 0.67rem;
+
+    cursor: pointer;
+}
+
+
+.exercise-select-wrapper select option {
+    background: #181c21;
+
+    color: var(--color-text);
+}
+
+
+/* ========================================
+   MAIN CHART
+======================================== */
+
+.main-chart-card {
+    padding: 25px 27px 20px;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    background: var(--color-surface);
+}
+
+
+.chart-summary {
+    margin-bottom: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.chart-summary > div:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+
+.chart-summary > div:first-child span {
+    color: var(--color-text-secondary);
+
+    font-size: 0.55rem;
+    font-weight: 700;
+
+    letter-spacing: 0.9px;
+}
+
+
+.chart-summary > div:first-child strong {
+    font-size: 1.5rem;
+
+    letter-spacing: -0.5px;
+}
+
+
+.chart-growth {
+    padding: 7px 10px;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    border-radius: 6px;
+
+    background: rgba(183, 255, 60, 0.07);
+
+    color: var(--color-primary);
+
+    font-size: 0.62rem;
+    font-weight: 700;
+}
+
+
+.chart-growth svg {
+    width: 13px;
+    height: 13px;
+}
+
+
+.main-chart-container {
+    position: relative;
+
+    width: 100%;
+    height: 270px;
+}
+
+
+/* ========================================
+   SECONDARY GRID
+======================================== */
+
+.progress-content-grid {
+    margin-bottom: 42px;
+
+    display: grid;
+
+    grid-template-columns: 1.35fr 0.65fr;
+
+    gap: 18px;
+}
+
+
+.progress-column {
+    min-width: 0;
+}
+
+
+/* ========================================
+   FREQUENCY
+======================================== */
+
+.frequency-card {
+    height: 300px;
+
+    padding: 22px;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    background: var(--color-surface);
+}
+
+
+.frequency-chart-container {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+}
+
+
+/* ========================================
+   RECORDS
+======================================== */
+
+.records-card {
+    overflow: hidden;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    background: var(--color-surface);
+}
+
+
+.record-item {
+    min-height: 74px;
+
+    padding: 15px 18px;
+
+    display: flex;
+    align-items: center;
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+.record-item:last-child {
+    border-bottom: none;
+}
+
+
+.record-icon {
+    width: 34px;
+    height: 34px;
+
+    margin-right: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background: rgba(183, 255, 60, 0.07);
+
+    color: var(--color-primary);
+}
+
+
+.record-icon svg {
+    width: 15px;
+    height: 15px;
+}
+
+
+.record-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+
+.record-info strong {
+    font-size: 0.72rem;
+}
+
+
+.record-info span {
+    color: var(--color-text-secondary);
+
+    font-size: 0.58rem;
+}
+
+
+.record-value {
+    margin-left: auto;
+
+    color: var(--color-primary);
+
+    font-size: 0.8rem;
+}
+
+
+/* ========================================
+   HISTORY
+======================================== */
+
+.history-section {
+    margin-bottom: 0;
+}
+
+
+.history-card {
+    overflow: hidden;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    background: var(--color-surface);
+}
+
+
+.history-item {
+    min-height: 76px;
+
+    padding: 15px 20px;
+
+    display: grid;
+
+    grid-template-columns:
+        40px
+        minmax(180px, 1fr)
+        100px
+        100px
+        105px;
+
+    gap: 12px;
+
+    align-items: center;
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+
+.history-icon {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background: #20252b;
+
+    color: var(--color-text-secondary);
+}
+
+
+.history-icon svg {
+    width: 15px;
+    height: 15px;
+}
+
+
+.history-workout {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+
+.history-workout strong {
+    font-size: 0.75rem;
+}
+
+
+.history-workout span {
+    color: var(--color-text-secondary);
+
+    font-size: 0.6rem;
+}
+
+
+.history-data {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+
+.history-data span {
+    color: var(--color-text-secondary);
+
+    font-size: 0.52rem;
+    font-weight: 700;
+
+    letter-spacing: 0.7px;
+}
+
+
+.history-data strong {
+    font-size: 0.68rem;
+}
+
+
+.history-status {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+
+    color: var(--color-primary);
+
+    font-size: 0.62rem;
+    font-weight: 700;
+}
+
+
+.history-status svg {
+    width: 13px;
+    height: 13px;
+}

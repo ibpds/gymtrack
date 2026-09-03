@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GymTrack | Perfil</title>
+
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/perfil.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <a href="dashboard.html" class="sidebar-logo">
+                <span class="logo-icon">G</span>
+                <span>GYMTRACK</span>
+            </a>
+
+            <nav class="sidebar-nav">
+
+                <a href="dashboard.html" class="nav-item">
+                    <i data-lucide="layout-dashboard" class="nav-icon"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="treinos.html" class="nav-item">
+                    <i data-lucide="dumbbell" class="nav-icon"></i>
+                    <span>Meus treinos</span>
+                </a>
+
+                <a href="progresso.html" class="nav-item">
+                    <i data-lucide="chart-no-axes-column-increasing" class="nav-icon"></i>
+                    <span>Progresso</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+
+                <a href="perfil.html" class="nav-item active">
+                    <i data-lucide="user-round" class="nav-icon"></i>
+                    <span>Perfil</span>
+                </a>
+
+                <a href="../index.html" class="nav-item logout">
+                    <i data-lucide="log-out" class="nav-icon"></i>
+                    <span>Sair</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN -->
+        <main class="profile-main">
+
+            <!-- HEADER -->
+            <header class="profile-page-header">
+
+                <span class="page-eyebrow">
+                    PERFIL
+                </span>
+
+                <h1>Minha conta</h1>
+
+                <p>
+                    Gerencie suas informações e preferências.
+                </p>
+
+            </header>
+
+
+            <!-- PROFILE SUMMARY -->
+            <section class="profile-summary">
+
+                <div class="profile-avatar">
+                    <span id="profile-initials">IZ</span>
+                </div>
+
+
+                <div class="profile-summary-info">
+
+                    <h2 id="profile-name">
+                        Izabela Pordeus
+                    </h2>
+
+                    <span id="profile-email">
+                        izabela@email.com
+                    </span>
+
+
+                    <div class="profile-badges">
+
+                        <span class="profile-badge" >
+                            <i data-lucide="dumbbell"></i>
+                            <span id="profile-level-badge">Intermediário</span>
+                        </span>
+
+                        <span class="profile-badge">
+                            <i data-lucide="target"></i>
+                            <span id="profile-goal-badge">Hipertrofia</span>
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-member">
+
+                    <span>MEMBRO DESDE</span>
+
+                    <strong>
+                        Agosto de 2026
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            <form id="profile-form">
+
+                <!-- PERSONAL DATA -->
+                <section class="profile-section">
+
+                    <div class="profile-section-heading">
+
+                        <div class="profile-section-icon">
+                            <i data-lucide="user-round"></i>
+                        </div>
+
+                        <div>
+                            <h2>Informações pessoais</h2>
+
+                            <p>
+                                Dados básicos da sua conta.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-card">
+
+                        <div class="profile-form-grid">
+
+                            <div class="profile-form-group">
+
+                                <label for="name">
+                                    Nome
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    value="Izabela Pordeus"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="profile-form-group">
+
+                                <label for="email">
+                                    E-mail
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value="izabela@email.com"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- TRAINING PREFERENCES -->
+                <section class="profile-section">
+
+                    <div class="profile-section-heading">
+
+                        <div class="profile-section-icon">
+                            <i data-lucide="target"></i>
+                        </div>
+
+                        <div>
+                            <h2>Preferências de treino</h2>
+
+                            <p>
+                                Conte um pouco sobre seus objetivos.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-card">
+
+                        <div class="profile-form-grid">
+
+                            <div class="profile-form-group">
+
+                                <label for="goal">
+                                    Objetivo principal
+                                </label>
+
+                                <div class="profile-select">
+
+                                    <select
+                                        id="goal"
+                                        name="goal"
+                                    >
+
+                                        <option value="hipertrofia" selected>
+                                            Hipertrofia
+                                        </option>
+
+                                        <option value="forca">
+                                            Ganho de força
+                                        </option>
+
+                                        <option value="emagrecimento">
+                                            Emagrecimento
+                                        </option>
+
+                                        <option value="condicionamento">
+                                            Condicionamento físico
+                                        </option>
+
+                                        <option value="saude">
+                                            Saúde e bem-estar
+                                        </option>
+
+                                    </select>
+
+                                    <i data-lucide="chevron-down"></i>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="profile-form-group">
+
+                                <label for="level">
+                                    Nível de experiência
+                                </label>
+
+                                <div class="profile-select">
+
+                                    <select
+                                        id="level"
+                                        name="level"
+                                    >
+
+                                        <option value="iniciante">
+                                            Iniciante
+                                        </option>
+
+                                        <option value="intermediario" selected>
+                                            Intermediário
+                                        </option>
+
+                                        <option value="avancado">
+                                            Avançado
+                                        </option>
+
+                                    </select>
+
+                                    <i data-lucide="chevron-down"></i>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ACTIONS -->
+                <div class="profile-actions">
+
+                    <button
+                        type="button"
+                        class="profile-cancel-btn"
+                        id="cancel-profile"
+                    >
+                        Cancelar
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="profile-save-btn"
+                    >
+                        <i data-lucide="check"></i>
+                        Salvar alterações
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <!-- SECURITY -->
+            <section class="profile-section security-section">
+
+                <div class="profile-section-heading">
+
+                    <div class="profile-section-icon">
+                        <i data-lucide="shield-check"></i>
+                    </div>
+
+                    <div>
+                        <h2>Segurança</h2>
+
+                        <p>
+                            Gerencie a segurança da sua conta.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="profile-card security-card">
+
+                    <div>
+
+                        <div class="security-icon">
+                            <i data-lucide="key-round"></i>
+                        </div>
+
+
+                        <div class="security-info">
+
+                            <strong>Senha</strong>
+
+                            <span>
+                                Altere sua senha de acesso ao GymTrack.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="change-password-btn"
+                        id="change-password"
+                    >
+                        Alterar senha
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- DANGER ZONE -->
+            <section class="profile-section danger-section">
+
+                <div class="profile-section-heading">
+
+                    <div class="profile-section-icon danger">
+                        <i data-lucide="triangle-alert"></i>
+                    </div>
+
+                    <div>
+                        <h2>Zona de perigo</h2>
+
+                        <p>
+                            Ações permanentes relacionadas à sua conta.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="danger-card">
+
+                    <div>
+
+                        <strong>
+                            Excluir conta
+                        </strong>
+
+                        <span>
+                            Todos os seus treinos, históricos e registros serão excluídos permanentemente.
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="delete-account-btn"
+                        id="delete-account"
+                    >
+                        <i data-lucide="trash-2"></i>
+                        Excluir conta
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/perfil.js"></script>
+
+</body>
+
+</html>

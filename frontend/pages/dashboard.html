@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GymTrack | Dashboard</title>
+
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+        <!-- ========================================
+             SIDEBAR
+        ========================================= -->
+
+        <aside class="sidebar">
+
+            <!-- Logo -->
+            <a href="dashboard.html" class="sidebar-logo">
+                <span class="logo-icon">G</span>
+                <span>GYMTRACK</span>
+            </a>
+
+
+            <!-- Navegação principal -->
+            <nav class="sidebar-nav">
+
+                <a href="dashboard.html" class="nav-item active">
+                    <i data-lucide="layout-dashboard" class="nav-icon"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="treinos.html" class="nav-item">
+                    <i data-lucide="dumbbell" class="nav-icon"></i>
+                    <span>Meus treinos</span>
+                </a>
+
+                <a href="progresso.html" class="nav-item">
+                    <i data-lucide="chart-no-axes-column-increasing" class="nav-icon"></i>
+                    <span>Progresso</span>
+                </a>
+
+            </nav>
+
+
+            <!-- Navegação inferior -->
+            <div class="sidebar-footer">
+
+                <a href="perfil.html" class="nav-item">
+                    <i data-lucide="user-round" class="nav-icon"></i>
+                    <span>Perfil</span>
+                </a>
+
+                <a href="../index.html" class="nav-item logout">
+                    <i data-lucide="log-out" class="nav-icon"></i>
+                    <span>Sair</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ========================================
+             CONTEÚDO PRINCIPAL
+        ========================================= -->
+
+        <main class="dashboard-main">
+
+
+            <!-- ========================================
+                 HEADER
+            ========================================= -->
+
+            <header class="dashboard-header">
+
+                <div>
+                    <span class="page-eyebrow">
+                        DASHBOARD
+                    </span>
+
+                    <h1>
+                        Olá, <span id="user-name">Izabela</span>!
+                    </h1>
+
+                    <p>
+                        Continue evoluindo. Cada treino conta.
+                    </p>
+                </div>
+
+
+                
+                <a
+                    href="perfil.html"
+                    class="user-avatar"
+                    aria-label="Acessar perfil"
+                >
+                    IZ
+                </a>
+
+            </header>
+
+
+            <!-- ========================================
+                 VISÃO GERAL
+            ========================================= -->
+
+            <section class="dashboard-section">
+
+                <div class="section-heading">
+                    <h2>Visão geral</h2>
+                </div>
+
+
+                <div class="stats-grid">
+
+
+                
+                    <article class="stat-card">
+
+                        <div class="stat-icon">
+                            <i data-lucide="dumbbell"></i>
+                        </div>
+
+                        <div>
+                            <strong id="workouts-week">
+                                3
+                            </strong>
+
+                            <span>
+                                Treinos esta semana
+                            </span>
+                        </div>
+
+                    </article>
+
+
+                    
+                    <article class="stat-card">
+
+                        <div class="stat-icon">
+                            <i data-lucide="calendar-days"></i>
+                        </div>
+
+                        <div>
+                            <strong id="workouts-month">
+                                12
+                            </strong>
+
+                            <span>
+                                Treinos no mês
+                            </span>
+                        </div>
+
+                    </article>
+
+
+                    
+                    <article class="stat-card">
+
+                        <div class="stat-icon">
+                            <i data-lucide="flame"></i>
+                        </div>
+
+                        <div>
+                            <strong id="streak">
+                                4
+                            </strong>
+
+                            <span>
+                                Semanas em sequência
+                            </span>
+                        </div>
+
+                    </article>
+
+
+                    
+                    <article class="stat-card">
+
+                        <div class="stat-icon">
+                            <i data-lucide="trophy"></i>
+                        </div>
+
+                        <div>
+                            <strong id="personal-records">
+                                5
+                            </strong>
+
+                            <span>
+                                Recordes pessoais
+                            </span>
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- ========================================
+                 TREINO + ATIVIDADE DA SEMANA
+            ========================================= -->
+
+            <section class="dashboard-grid">
+
+
+                <!-- ====================================
+                     PRÓXIMO TREINO
+                ===================================== -->
+
+                <div class="dashboard-column">
+
+                    <div class="section-heading">
+
+                        <h2>
+                            Próximo treino
+                        </h2>
+
+                        <a href="treinos.html">
+                            Ver treinos
+                        </a>
+
+                    </div>
+
+
+                    <article class="next-workout-card">
+
+                        <div class="workout-top">
+
+                            <span class="workout-tag">
+                                PRÓXIMO
+                            </span>
+
+                            <span class="workout-code">
+                                TREINO A
+                            </span>
+
+                        </div>
+
+
+                        <div class="workout-content">
+
+                            <h3>
+                                Pernas & Glúteos
+                            </h3>
+
+                            <p>
+                                Agachamento, leg press, cadeira extensora
+                                e mais 3 exercícios.
+                            </p>
+
+                        </div>
+
+
+                        <div class="workout-meta">
+
+                            <span>
+                                <i data-lucide="list-checks"></i>
+                                6 exercícios
+                            </span>
+
+                            <span class="meta-divider"></span>
+
+                            <span>
+                                <i data-lucide="clock"></i>
+                                ~55 min
+                            </span>
+
+                        </div>
+
+
+                        <a
+                            href="realizar-treino.html"
+                            class="start-workout-btn"
+                        >
+                            <i data-lucide="play"></i>
+
+                            <span>
+                                Iniciar treino
+                            </span>
+                        </a>
+
+                    </article>
+
+                </div>
+
+
+                <!-- ====================================
+                     ATIVIDADE DA SEMANA
+                ===================================== -->
+
+                <div class="dashboard-column">
+
+                    <div class="section-heading">
+                        <h2>
+                            Atividade da semana
+                        </h2>
+                    </div>
+
+
+                    <article class="week-card">
+
+                        <div class="week-days">
+
+
+                            
+                            <div class="day completed">
+
+                                <span>S</span>
+
+                                <div>
+                                    <i data-lucide="check"></i>
+                                </div>
+
+                            </div>
+
+
+                             
+                            <div class="day completed">
+
+                                <span>T</span>
+
+                                <div>
+                                    <i data-lucide="check"></i>
+                                </div>
+
+                            </div>
+
+
+                            
+                            <div class="day">
+
+                                <span>Q</span>
+
+                                <div></div>
+
+                            </div>
+
+
+                            
+                            <div class="day completed">
+
+                                <span>Q</span>
+
+                                <div>
+                                    <i data-lucide="check"></i>
+                                </div>
+
+                            </div>
+
+
+                            
+                            <div class="day">
+
+                                <span>S</span>
+
+                                <div></div>
+
+                            </div>
+
+
+                            
+                            <div class="day">
+
+                                <span>S</span>
+
+                                <div></div>
+
+                            </div>
+
+
+                            
+                            <div class="day">
+
+                                <span>D</span>
+
+                                <div></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="week-summary">
+
+                            <strong>
+                                3 treinos
+                            </strong>
+
+                            <span>
+                                realizados esta semana
+                            </span>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!--========================================
+                 EVOLUÇÃO RECENTE
+            ========================================= -->
+
+            <section class="dashboard-section progress-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>
+                            Evolução recente
+                        </h2>
+
+                        <p>
+                            Seu progresso no agachamento
+                        </p>
+                    </div>
+
+
+                    <a href="progresso.html">
+                        Ver progresso →
+                    </a>
+
+                </div>
+
+
+                <article class="progress-card">
+
+                    <div class="progress-header">
+
+                        <div>
+
+                            <span class="progress-exercise">
+                                Agachamento
+                            </span>
+
+                            <strong>
+                                60 kg
+                            </strong>
+
+                        </div>
+
+
+                        <span class="progress-growth">
+
+                            <i data-lucide="trending-up"></i>
+
+                            +10 kg
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="chart-placeholder">
+
+                        <div class="chart-line">
+
+                            <span class="point point-1"></span>
+                            <span class="point point-2"></span>
+                            <span class="point point-3"></span>
+                            <span class="point point-4"></span>
+                            <span class="point point-5"></span>
+
+                        </div>
+
+
+                        <div class="chart-labels">
+
+                            <span>Mai</span>
+                            <span>Jun</span>
+                            <span>Jul</span>
+                            <span>Ago</span>
+                            <span>Set</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- ========================================
+         SCRIPTS
+    ========================================= -->
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script src="../js/dashboard.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GymTrack | Meus Treinos</title>
+
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/treinos.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <a href="dashboard.html" class="sidebar-logo">
+                <span class="logo-icon">G</span>
+                <span>GYMTRACK</span>
+            </a>
+
+            <nav class="sidebar-nav">
+
+                <a href="dashboard.html" class="nav-item">
+                    <i data-lucide="layout-dashboard" class="nav-icon"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="treinos.html" class="nav-item active">
+                    <i data-lucide="dumbbell" class="nav-icon"></i>
+                    <span>Meus treinos</span>
+                </a>
+
+                <a href="progresso.html" class="nav-item">
+                    <i data-lucide="chart-no-axes-column-increasing" class="nav-icon"></i>
+                    <span>Progresso</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+
+                <a href="perfil.html" class="nav-item">
+                    <i data-lucide="user-round" class="nav-icon"></i>
+                    <span>Perfil</span>
+                </a>
+
+                <a href="../index.html" class="nav-item logout">
+                    <i data-lucide="log-out" class="nav-icon"></i>
+                    <span>Sair</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN -->
+        <main class="treinos-main">
+
+            <!-- HEADER -->
+            <header class="page-header">
+
+                <div>
+                    <span class="page-eyebrow">TREINOS</span>
+
+                    <h1>Meus treinos</h1>
+
+                    <p>
+                        Crie e organize suas fichas de treino.
+                    </p>
+                </div>
+
+                <a href="treino-form.html" class="new-workout-btn">
+                    <i data-lucide="plus"></i>
+                    Novo treino
+                </a>
+
+            </header>
+
+
+            <!-- TREINOS -->
+            <section>
+
+                <div class="workouts-header">
+
+                    <h2>Seus treinos</h2>
+
+                    <span id="workout-count">
+                        3 treinos
+                    </span>
+
+                </div>
+
+
+                <div class="workouts-grid" id="workouts-grid">
+
+                    <!-- TREINO A -->
+                    <article class="workout-card">
+
+                        <div class="workout-card-header">
+
+                            <span class="workout-label">
+                                TREINO A
+                            </span>
+
+                            <div class="workout-actions">
+
+    <button
+        class="workout-menu"
+        type="button"
+        aria-label="Opções do treino"
+        aria-expanded="false"
+    >
+        <i data-lucide="ellipsis-vertical"></i>
+    </button>
+
+    <div class="workout-dropdown">
+
+        <a href="treino-form.html" class="dropdown-item">
+            <i data-lucide="pencil"></i>
+            Editar
+        </a>
+
+        <button
+            type="button"
+            class="dropdown-item delete"
+        >
+            <i data-lucide="trash-2"></i>
+            Excluir
+        </button>
+
+    </div>
+
+</div>
+
+                        </div>
+
+
+                        <div class="workout-card-title">
+
+                            <h3>Pernas & Glúteos</h3>
+
+                            <p>
+                                Foco em quadríceps, posterior e glúteos.
+                            </p>
+
+                        </div>
+
+
+                        <div class="workout-info">
+
+                            <span>
+                                <i data-lucide="list-checks"></i>
+                                6 exercícios
+                            </span>
+
+                            <span>
+                                <i data-lucide="clock"></i>
+                                ~55 min
+                            </span>
+
+                        </div>
+
+
+                        <div class="exercise-preview">
+
+                            <span>Agachamento</span>
+                            <span>Leg press</span>
+                            <span>Cadeira extensora</span>
+
+                            <span class="more-exercises">
+                                +3 exercícios
+                            </span>
+
+                        </div>
+
+
+                        <a
+                            href="realizar-treino.html"
+                            class="workout-start"
+                        >
+                            <i data-lucide="play"></i>
+                            Iniciar treino
+                        </a>
+
+                    </article>
+
+
+                    <!-- TREINO B -->
+                    <article class="workout-card">
+
+                        <div class="workout-card-header">
+
+                            <span class="workout-label">
+                                TREINO B
+                            </span>
+
+                            <div class="workout-actions">
+
+    <button
+        class="workout-menu"
+        type="button"
+        aria-label="Opções do treino"
+        aria-expanded="false"
+    >
+        <i data-lucide="ellipsis-vertical"></i>
+    </button>
+
+    <div class="workout-dropdown">
+
+        <a href="treino-form.html" class="dropdown-item">
+            <i data-lucide="pencil"></i>
+            Editar
+        </a>
+
+        <button
+            type="button"
+            class="dropdown-item delete"
+        >
+            <i data-lucide="trash-2"></i>
+            Excluir
+        </button>
+
+    </div>
+
+</div>
+
+                        </div>
+
+
+                        <div class="workout-card-title">
+
+                            <h3>Peito & Tríceps</h3>
+
+                            <p>
+                                Treino de empurrar com foco em força.
+                            </p>
+
+                        </div>
+
+
+                        <div class="workout-info">
+
+                            <span>
+                                <i data-lucide="list-checks"></i>
+                                5 exercícios
+                            </span>
+
+                            <span>
+                                <i data-lucide="clock"></i>
+                                ~50 min
+                            </span>
+
+                        </div>
+
+
+                        <div class="exercise-preview">
+
+                            <span>Supino reto</span>
+                            <span>Supino inclinado</span>
+                            <span>Tríceps corda</span>
+
+                            <span class="more-exercises">
+                                +2 exercícios
+                            </span>
+
+                        </div>
+
+
+                        <a
+                            href="realizar-treino.html"
+                            class="workout-start"
+                        >
+                            <i data-lucide="play"></i>
+                            Iniciar treino
+                        </a>
+
+                    </article>
+
+
+                    <!-- TREINO C -->
+                    <article class="workout-card">
+
+                        <div class="workout-card-header">
+
+                            <span class="workout-label">
+                                TREINO C
+                            </span>
+
+                            <div class="workout-actions">
+
+    <button
+        class="workout-menu"
+        type="button"
+        aria-label="Opções do treino"
+        aria-expanded="false"
+    >
+        <i data-lucide="ellipsis-vertical"></i>
+    </button>
+
+    <div class="workout-dropdown">
+
+        <a href="treino-form.html" class="dropdown-item">
+            <i data-lucide="pencil"></i>
+            Editar
+        </a>
+
+        <button
+            type="button"
+            class="dropdown-item delete"
+        >
+            <i data-lucide="trash-2"></i>
+            Excluir
+        </button>
+
+    </div>
+
+</div>
+
+                        </div>
+
+
+                        <div class="workout-card-title">
+
+                            <h3>Costas & Bíceps</h3>
+
+                            <p>
+                                Foco em puxadas, remadas e bíceps.
+                            </p>
+
+                        </div>
+
+
+                        <div class="workout-info">
+
+                            <span>
+                                <i data-lucide="list-checks"></i>
+                                6 exercícios
+                            </span>
+
+                            <span>
+                                <i data-lucide="clock"></i>
+                                ~60 min
+                            </span>
+
+                        </div>
+
+
+                        <div class="exercise-preview">
+
+                            <span>Puxada frontal</span>
+                            <span>Remada baixa</span>
+                            <span>Rosca direta</span>
+
+                            <span class="more-exercises">
+                                +3 exercícios
+                            </span>
+
+                        </div>
+
+
+                        <a
+                            href="realizar-treino.html"
+                            class="workout-start"
+                        >
+                            <i data-lucide="play"></i>
+                            Iniciar treino
+                        </a>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/treinos.js"></script>
+
+</body>
+
+</html>

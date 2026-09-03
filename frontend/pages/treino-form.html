@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GymTrack | Novo Treino</title>
+
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/treinos.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <a href="dashboard.html" class="sidebar-logo">
+                <span class="logo-icon">G</span>
+                <span>GYMTRACK</span>
+            </a>
+
+            <nav class="sidebar-nav">
+
+                <a href="dashboard.html" class="nav-item">
+                    <i data-lucide="layout-dashboard" class="nav-icon"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="treinos.html" class="nav-item active">
+                    <i data-lucide="dumbbell" class="nav-icon"></i>
+                    <span>Meus treinos</span>
+                </a>
+
+                <a href="progresso.html" class="nav-item">
+                    <i data-lucide="chart-no-axes-column-increasing" class="nav-icon"></i>
+                    <span>Progresso</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+
+                <a href="perfil.html" class="nav-item">
+                    <i data-lucide="user-round" class="nav-icon"></i>
+                    <span>Perfil</span>
+                </a>
+
+                <a href="../index.html" class="nav-item logout">
+                    <i data-lucide="log-out" class="nav-icon"></i>
+                    <span>Sair</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN -->
+        <main class="workout-form-main">
+
+            <!-- HEADER -->
+            <header class="form-page-header">
+
+                <div>
+
+                    <a href="treinos.html" class="back-link">
+                        <i data-lucide="arrow-left"></i>
+                        Meus treinos
+                    </a>
+
+                    <span class="page-eyebrow">
+                        NOVO TREINO
+                    </span>
+
+                    <h1>Criar treino</h1>
+
+                    <p>
+                        Monte sua ficha e adicione os exercícios.
+                    </p>
+
+                </div>
+
+            </header>
+
+
+            <form id="workout-form">
+
+                <!-- ==================================
+                     INFORMAÇÕES
+                =================================== -->
+
+                <section class="form-section">
+
+                    <div class="form-section-heading">
+
+                        <div>
+                            <h2>Informações do treino</h2>
+
+                            <p>
+                                Defina as informações principais da sua ficha.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-card">
+
+                        <div class="form-group full">
+
+                            <label for="workout-name">
+                                Nome do treino
+                            </label>
+
+                            <input
+                                type="text"
+                                id="workout-name"
+                                name="nome"
+                                placeholder="Ex.: Pernas & Glúteos"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group full">
+
+                            <label for="workout-description">
+                                Descrição
+                                <span>opcional</span>
+                            </label>
+
+                            <textarea
+                                id="workout-description"
+                                name="descricao"
+                                rows="3"
+                                placeholder="Ex.: Foco em quadríceps, posterior e glúteos."
+                            ></textarea>
+
+                        </div>
+
+
+                        <div class="form-group duration-group">
+
+                            <label for="workout-duration">
+                                Duração estimada
+                            </label>
+
+                            <div class="input-unit">
+
+                                <input
+                                    type="number"
+                                    id="workout-duration"
+                                    name="duracao"
+                                    min="1"
+                                    placeholder="55"
+                                >
+
+                                <span>min</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ==================================
+                     EXERCÍCIOS
+                =================================== -->
+
+                <section class="form-section">
+
+                    <div class="form-section-heading exercises-heading">
+
+                        <div>
+                            <h2>Exercícios</h2>
+
+                            <p>
+                                Adicione os exercícios que fazem parte deste treino.
+                            </p>
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="add-exercise-btn"
+                            id="add-exercise"
+                        >
+                            <i data-lucide="plus"></i>
+                            Adicionar exercício
+                        </button>
+
+                    </div>
+
+
+                    <!-- Lista dinâmica -->
+                    <div
+                        class="exercises-list"
+                        id="exercises-list"
+                    ></div>
+
+
+                    <!-- Estado vazio -->
+                    <div
+                        class="empty-exercises"
+                        id="empty-exercises"
+                    >
+
+                        <div class="empty-icon">
+                            <i data-lucide="dumbbell"></i>
+                        </div>
+
+                        <h3>Nenhum exercício adicionado</h3>
+
+                        <p>
+                            Adicione o primeiro exercício para montar sua ficha.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="empty-add-btn"
+                            id="empty-add-exercise"
+                        >
+                            <i data-lucide="plus"></i>
+                            Adicionar exercício
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ==================================
+                     FOOTER
+                =================================== -->
+
+                <div class="form-actions">
+
+                    <a
+                        href="treinos.html"
+                        class="cancel-btn"
+                    >
+                        Cancelar
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="save-workout-btn"
+                    >
+                        <i data-lucide="check"></i>
+                        Salvar treino
+                    </button>
+
+                </div>
+
+            </form>
+
+        </main>
+
+    </div>
+
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/storage.js"></script>
+    <script src="../js/treino-form.js"></script>
+
+</body>
+
+</html>
