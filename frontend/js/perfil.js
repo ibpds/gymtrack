@@ -2,299 +2,204 @@
    ELEMENTOS
 ======================================== */
 
-const profileForm =
-    document.getElementById("profile-form");
+const profileForm = document.getElementById("profile-form");
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const goalSelect = document.getElementById("goal");
+const levelSelect = document.getElementById("level");
 
-const nameInput =
-    document.getElementById("name");
+const profileName = document.getElementById("profile-name");
+const profileEmail = document.getElementById("profile-email");
+const profileInitials = document.getElementById("profile-initials");
 
-const emailInput =
-    document.getElementById("email");
+const levelBadge = document.getElementById("profile-level-badge");
+const goalBadge = document.getElementById("profile-goal-badge");
 
-const goalSelect =
-    document.getElementById("goal");
+const cancelButton = document.getElementById("cancel-profile");
+const changePasswordButton = document.getElementById("change-password");
+const deleteAccountButton = document.getElementById("delete-account");
 
-const levelSelect =
-    document.getElementById("level");
-
-const profileName =
-    document.getElementById("profile-name");
-
-const profileEmail =
-    document.getElementById("profile-email");
-
-const profileInitials =
-    document.getElementById("profile-initials");
-
-const cancelButton =
-    document.getElementById("cancel-profile");
-
-const changePasswordButton =
-    document.getElementById("change-password");
-
-const deleteAccountButton =
-    document.getElementById("delete-account");
-
-
-/* ========================================
-   DADOS INICIAIS
-======================================== */
-
-const initialProfile = {
-
-    name: nameInput.value,
-
-    email: emailInput.value,
-
-    goal: goalSelect.value,
-
-    level: levelSelect.value
-
-};
-
+let currentUser = null;
 
 /* ========================================
    INICIAIS
 ======================================== */
 
 function getInitials(name) {
+    const parts = (name || "")
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
 
-    const parts =
-        name
-            .trim()
-            .split(/\s+/)
-            .filter(Boolean);
+    if (parts.length === 0) return "?";
+    if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
 
-
-    if (parts.length === 0) {
-        return "?";
-    }
-
-
-    if (parts.length === 1) {
-        return parts[0]
-            .charAt(0)
-            .toUpperCase();
-    }
-
-
-    return (
-        parts[0].charAt(0) +
-        parts[parts.length - 1].charAt(0)
-    ).toUpperCase();
-
+    return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
 }
 
-
 /* ========================================
-   ATUALIZAR RESUMO
+   ATUALIZAR RESUMO VISUAL
 ======================================== */
 
 function updateProfileSummary() {
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
 
-    profileName.textContent =
-        nameInput.value.trim() ||
-        "Usuário";
-
-    profileEmail.textContent =
-        emailInput.value.trim();
-
-    profileInitials.textContent =
-        getInitials(nameInput.value);
-
+    profileName.textContent = name || "Usuário";
+    profileEmail.textContent = email || "email@exemplo.com";
+    profileInitials.textContent = getInitials(name);
 }
 
+function updateProfileBadges() {
+    if (levelSelect.selectedIndex >= 0) {
+        levelBadge.textContent = levelSelect.options[levelSelect.selectedIndex].text;
+    }
+    if (goalSelect.selectedIndex >= 0) {
+        goalBadge.textContent = goalSelect.options[goalSelect.selectedIndex].text;
+    }
+}
 
 /* ========================================
-   SALVAR
+   CARREGAR DADOS DO USUÁRIO
 ======================================== */
 
-profileForm.addEventListener(
-    "submit",
-    (event) => {
+async function carregarPerfil() {
+    currentUser = GymTrackAPI.auth.getCurrentUser();
 
-        event.preventDefault();
+    try {
+        if (currentUser && currentUser.id) {
+            const freshUser = await GymTrackAPI.usuarios.getById(currentUser.id);
+            if (freshUser) {
+                currentUser = { ...currentUser, ...freshUser };
+                GymTrackAPI.auth.setCurrentUser(currentUser);
+            }
+        }
+    } catch (e) {
+        console.warn("Não foi possível buscar perfil atualizado no backend, usando cache local", e);
+    }
 
-
-        const profileData = {
-
-            nome:
-                nameInput.value.trim(),
-
-            email:
-                emailInput.value.trim(),
-
-            objetivo:
-                goalSelect.value,
-
-            nivel:
-                levelSelect.value
-
+    if (!currentUser) {
+        currentUser = {
+            id: 1,
+            nome: "João Silva",
+            email: "joao@email.com",
+            objetivo: "Hipertrofia",
+            nivel: "Intermediário"
         };
+    }
 
+    nameInput.value = currentUser.nome || "";
+    emailInput.value = currentUser.email || "";
 
-        console.log(
-            "Perfil pronto para API:",
-            profileData
-        );
+    if (currentUser.objetivo) {
+        for (let i = 0; i < goalSelect.options.length; i++) {
+            if (goalSelect.options[i].value === currentUser.objetivo || goalSelect.options[i].text === currentUser.objetivo) {
+                goalSelect.selectedIndex = i;
+                break;
+            }
+        }
+    }
 
+    if (currentUser.nivel) {
+        for (let i = 0; i < levelSelect.options.length; i++) {
+            if (levelSelect.options[i].value === currentUser.nivel || levelSelect.options[i].text === currentUser.nivel) {
+                levelSelect.selectedIndex = i;
+                break;
+            }
+        }
+    }
 
-        /*
-            Futuramente:
+    updateProfileSummary();
+    updateProfileBadges();
+    if (window.lucide) lucide.createIcons();
+}
 
-            await apiRequest("/perfil", {
+/* ========================================
+   SALVAR NO BACKEND
+======================================== */
 
-                method: "PUT",
+profileForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-                body: JSON.stringify(
-                    profileData
-                )
+    const saveButton = profileForm.querySelector("button[type='submit']");
+    if (saveButton) saveButton.disabled = true;
 
-            });
-        */
+    const profileData = {
+        nome: nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        objetivo: goalSelect.value,
+        nivel: levelSelect.value
+    };
 
-
+    try {
+        const updated = await GymTrackAPI.usuarios.update(currentUser.id, profileData);
+        currentUser = { ...currentUser, ...updated };
         updateProfileSummary();
         updateProfileBadges();
-
-
-        alert(
-            "Perfil atualizado com sucesso!"
-        );
-
+        alert("Perfil salvo com sucesso no banco de dados SQLite!");
+    } catch (err) {
+        console.error("Erro ao salvar perfil:", err);
+        alert("Erro ao salvar dados do perfil no backend: " + err.message);
+    } finally {
+        if (saveButton) saveButton.disabled = false;
     }
-);
-
+});
 
 /* ========================================
    CANCELAR ALTERAÇÕES
 ======================================== */
 
-cancelButton.addEventListener(
-    "click",
-    () => {
-
-        nameInput.value =
-            initialProfile.name;
-
-        emailInput.value =
-            initialProfile.email;
-
-        goalSelect.value =
-            initialProfile.goal;
-
-        levelSelect.value =
-            initialProfile.level;
-
-
-        updateProfileSummary();
-        updateProfileBadges();
-
-    }
-);
-
+cancelButton.addEventListener("click", () => {
+    carregarPerfil();
+});
 
 /* ========================================
    ALTERAR SENHA
 ======================================== */
 
-changePasswordButton.addEventListener(
-    "click",
-    () => {
+changePasswordButton.addEventListener("click", async () => {
+    const novaSenha = prompt("Digite sua nova senha:");
+    if (!novaSenha || !novaSenha.trim()) return;
 
-        /*
-            Depois podemos transformar
-            isso em um modal.
-        */
-
-        alert(
-            "A alteração de senha será conectada à API."
-        );
-
+    try {
+        await GymTrackAPI.usuarios.update(currentUser.id, { senha: novaSenha.trim() });
+        alert("Senha atualizada com sucesso no banco de dados!");
+    } catch (err) {
+        alert("Erro ao atualizar senha: " + err.message);
     }
-);
-
+});
 
 /* ========================================
    EXCLUIR CONTA
 ======================================== */
 
-deleteAccountButton.addEventListener(
-    "click",
-    () => {
-
-        const confirmed =
-            confirm(
-                "Tem certeza que deseja excluir sua conta? Esta ação não poderá ser desfeita."
-            );
-
-
-        if (!confirmed) {
-            return;
-        }
-
-
-        /*
-            Futuramente:
-
-            await apiRequest("/perfil", {
-                method: "DELETE"
-            });
-        */
-
-
-        console.log(
-            "Solicitação de exclusão da conta."
-        );
-
-    }
-);
-
+deleteAccountButton.addEventListener("click", () => {
+    alert("Para excluir sua conta definitivamente, entre em contato com o suporte ou administrador do sistema.");
+});
 
 /* ========================================
-   ATUALIZAÇÃO VISUAL
+   LOGOUT
 ======================================== */
 
-nameInput.addEventListener(
-    "input",
-    updateProfileSummary
-);
-
-emailInput.addEventListener(
-    "input",
-    updateProfileSummary
-);
-
-const levelBadge =
-    document.getElementById("profile-level-badge");
-
-const goalBadge =
-    document.getElementById("profile-goal-badge");
-
-function updateProfileBadges() {
-
-    const selectedLevel =
-        levelSelect.options[
-            levelSelect.selectedIndex
-        ].text;
-
-    const selectedGoal =
-        goalSelect.options[
-            goalSelect.selectedIndex
-        ].text;
-
-    levelBadge.textContent =
-        selectedLevel;
-
-    goalBadge.textContent =
-        selectedGoal;
+const logoutBtn = document.querySelector(".nav-item.logout");
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        GymTrackAPI.auth.logout();
+    });
 }
 
+/* ========================================
+   ATUALIZAÇÃO VISUAL DINÂMICA
+======================================== */
+
+nameInput.addEventListener("input", updateProfileSummary);
+emailInput.addEventListener("input", updateProfileSummary);
+goalSelect.addEventListener("change", updateProfileBadges);
+levelSelect.addEventListener("change", updateProfileBadges);
 
 /* ========================================
    INICIALIZAÇÃO
 ======================================== */
 
-updateProfileSummary();
-updateProfileBadges();
-lucide.createIcons();
+carregarPerfil();

@@ -1,24 +1,40 @@
-from pydantic import BaseModel
+# pyrefly: ignore [missing-import]
+from pydantic import BaseModel, ConfigDict
 from typing import List, Optional
 from datetime import date
 
-# Usuario
+# ====================
+# USUÁRIO
+# ====================
+
 class UsuarioBase(BaseModel):
     nome: str
     email: str
+    objetivo: Optional[str] = None
+    nivel: Optional[str] = None
 
 class UsuarioCreate(UsuarioBase):
     senha: Optional[str] = None
 
+class UsuarioUpdate(BaseModel):
+    nome: Optional[str] = None
+    email: Optional[str] = None
+    senha: Optional[str] = None
+    objetivo: Optional[str] = None
+    nivel: Optional[str] = None
+
 class Usuario(UsuarioBase):
     id: int
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 class Login(BaseModel):
     email: str
+    senha: Optional[str] = None
 
-# Exercicio
+# ====================
+# EXERCÍCIO
+# ====================
+
 class ExercicioBase(BaseModel):
     nome: str
     grupo_muscular: Optional[str] = None
@@ -26,67 +42,107 @@ class ExercicioBase(BaseModel):
 class ExercicioCreate(ExercicioBase):
     pass
 
+class ExercicioUpdate(BaseModel):
+    nome: Optional[str] = None
+    grupo_muscular: Optional[str] = None
+
 class Exercicio(ExercicioBase):
     id: int
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
-# Treino Exercicio
+# ====================
+# TREINO EXERCÍCIO (PLANEJADO)
+# ====================
+
 class TreinoExercicioBase(BaseModel):
-    exercicio_id: int
-    series_planejadas: int
-    repeticoes_planejadas: int
-    carga_planejada: float
+    exercicio_id: Optional[int] = None
+    exercicio_nome: Optional[str] = None
+    series_planejadas: int = 4
+    repeticoes_planejadas: int = 10
+    carga_planejada: float = 0.0
+    descanso: Optional[int] = 60
+    observacao: Optional[str] = ""
 
 class TreinoExercicioCreate(TreinoExercicioBase):
     pass
 
 class TreinoExercicio(TreinoExercicioBase):
     id: int
-    class Config:
-        orm_mode = True
+    exercicio: Optional[Exercicio] = None
+    model_config = ConfigDict(from_attributes=True)
 
-# Treino
+    @property
+    def nome(self) -> str:
+        if self.exercicio and self.exercicio.nome:
+            return self.exercicio.nome
+        return self.exercicio_nome or ""
+
+# ====================
+# TREINO
+# ====================
+
 class TreinoBase(BaseModel):
     nome: str
+    descricao: Optional[str] = ""
+    duracao_estimada: Optional[int] = 0
     usuario_id: int
 
 class TreinoCreate(TreinoBase):
-    pass
+    exercicios: Optional[List[TreinoExercicioCreate]] = []
+
+class TreinoUpdate(BaseModel):
+    nome: Optional[str] = None
+    descricao: Optional[str] = None
+    duracao_estimada: Optional[int] = None
+    exercicios: Optional[List[TreinoExercicioCreate]] = None
 
 class Treino(TreinoBase):
     id: int
     exercicios: List[TreinoExercicio] = []
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
-# Execucao Exercicio
+# ====================
+# EXECUÇÃO DE EXERCÍCIO
+# ====================
+
 class ExecucaoExercicioBase(BaseModel):
-    exercicio_id: int
-    series_realizadas: int
-    repeticoes_realizadas: int
-    carga_realizada: float
+    exercicio_id: Optional[int] = None
+    exercicio_nome: Optional[str] = None
+    series_realizadas: int = 0
+    repeticoes_realizadas: int = 0
+    carga_realizada: float = 0.0
 
 class ExecucaoExercicioCreate(ExecucaoExercicioBase):
     pass
 
 class ExecucaoExercicio(ExecucaoExercicioBase):
     id: int
-    pr: int
-    class Config:
-        orm_mode = True
+    pr: int = 0
+    exercicio: Optional[Exercicio] = None
+    model_config = ConfigDict(from_attributes=True)
 
-# Execucao Treino
+    @property
+    def nome(self) -> str:
+        if self.exercicio and self.exercicio.nome:
+            return self.exercicio.nome
+        return self.exercicio_nome or ""
+
+# ====================
+# EXECUÇÃO DE TREINO
+# ====================
+
 class ExecucaoTreinoBase(BaseModel):
-    treino_id: int
+    treino_id: Optional[int] = None
+    treino_nome: Optional[str] = None
     usuario_id: int
     data_execucao: date
+    duracao_segundos: Optional[int] = 0
 
 class ExecucaoTreinoCreate(ExecucaoTreinoBase):
     exercicios: List[ExecucaoExercicioCreate]
 
 class ExecucaoTreino(ExecucaoTreinoBase):
     id: int
+    treino: Optional[Treino] = None
     exercicios_executados: List[ExecucaoExercicio] = []
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

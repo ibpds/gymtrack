@@ -11,7 +11,9 @@ class Usuario(Base):
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String, nullable=False)
     email = Column(String, unique=True, index=True, nullable=False)
-    senha = Column(String, nullable=True) # Adicionado senha provisória caso precise no futuro
+    senha = Column(String, nullable=True)
+    objetivo = Column(String, nullable=True)
+    nivel = Column(String, nullable=True)
 
     treinos = relationship("Treino", back_populates="usuario")
     execucoes = relationship("ExecucaoTreino", back_populates="usuario")
@@ -30,6 +32,8 @@ class Treino(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String, nullable=False)
+    descricao = Column(String, nullable=True)
+    duracao_estimada = Column(Integer, nullable=True)
     usuario_id = Column(Integer, ForeignKey("usuarios.id"))
 
     usuario = relationship("Usuario", back_populates="treinos")
@@ -45,6 +49,8 @@ class TreinoExercicio(Base):
     series_planejadas = Column(Integer)
     repeticoes_planejadas = Column(Integer)
     carga_planejada = Column(Float)
+    descanso = Column(Integer, nullable=True, default=60)
+    observacao = Column(String, nullable=True)
 
     treino = relationship("Treino", back_populates="exercicios")
     exercicio = relationship("Exercicio")
@@ -57,6 +63,7 @@ class ExecucaoTreino(Base):
     treino_id = Column(Integer, ForeignKey("treinos.id"))
     usuario_id = Column(Integer, ForeignKey("usuarios.id"))
     data_execucao = Column(Date, default=datetime.date.today)
+    duracao_segundos = Column(Integer, nullable=True, default=0)
 
     usuario = relationship("Usuario", back_populates="execucoes")
     treino = relationship("Treino")
@@ -76,3 +83,4 @@ class ExecucaoExercicio(Base):
 
     execucao_treino = relationship("ExecucaoTreino", back_populates="exercicios_executados")
     exercicio = relationship("Exercicio")
+

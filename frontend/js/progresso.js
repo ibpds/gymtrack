@@ -1045,83 +1045,91 @@ function renderHistory(sessionsDesc) {
    INICIALIZAÇÃO
 ======================================== */
 
-function init() {
+async function init() {
 
-    const history =
-        GymTrackStorage.getHistory();
+    try {
+        const user = GymTrackAPI.auth.getCurrentUser();
+        const rawHistory = await GymTrackAPI.execucoes.getAll(user.id);
 
-    const historyDesc =
-        [...history].sort((a, b) => {
+        const history = (rawHistory || []).map(item => {
+            const exercicios = (item.exercicios_executados || []).map(ex => {
+                const nome = ex.nome || (ex.exercicio && ex.exercicio.nome) || ex.exercicio_nome || "Exercício";
+                const seriesCount = ex.series_realizadas || 1;
+                return {
+                    nome,
+                    series: Array.from({ length: seriesCount }, () => ({
+                        carga: ex.carga_realizada || 0,
+                        repeticoes: ex.repeticoes_realizadas || 1,
+                        concluida: true
+                    }))
+                };
+            });
 
-            const dateA = parseDate(a.realizadoEm);
-            const dateB = parseDate(b.realizadoEm);
+            const dataStr = item.data_execucao ? (item.data_execucao + "T12:00:00") : new Date().toISOString();
 
-            return (dateB ? dateB.getTime() : 0) -
-                (dateA ? dateA.getTime() : 0);
-
+            return {
+                id: item.id,
+                treinoId: item.treino_id,
+                treinoNome: (item.treino && item.treino.nome) || item.treino_nome || "Treino",
+                duracaoSegundos: item.duracao_segundos || 0,
+                realizadoEm: dataStr,
+                exercicios
+            };
         });
 
+        const historyDesc = [...history].sort((a, b) => {
+            const dateA = parseDate(a.realizadoEm);
+            const dateB = parseDate(b.realizadoEm);
+            return (dateB ? dateB.getTime() : 0) - (dateA ? dateA.getTime() : 0);
+        });
 
-    const totalVolume =
-        calculateTotalVolume(history);
+        const totalVolume = calculateTotalVolume(history);
+        const entries = buildExerciseEntries(history);
+        exerciseEntriesMap = groupEntriesByExercise(entries);
+        const records = calculatePersonalRecords(exerciseEntriesMap);
+        const streak = calculateStreak(history);
+        const weeks = calculateWeeklyFrequency(history, WEEKS_COUNT);
 
-    const entries =
-        buildExerciseEntries(history);
+        renderSummary({
+            totalWorkouts: history.length,
+            streak,
+            recordsCount: exerciseEntriesMap.size,
+            totalVolume
+        });
 
-    exerciseEntriesMap =
-        groupEntriesByExercise(entries);
+        const exerciseOptions = getExerciseOptions(exerciseEntriesMap);
+        populateExerciseSelect(exerciseOptions);
 
-    const records =
-        calculatePersonalRecords(exerciseEntriesMap);
+        weightChart = createLoadChart();
+        renderLoadChart(
+            exerciseOptions.length > 0 ? exerciseOptions[0].key : null
+        );
 
-    const streak =
-        calculateStreak(history);
+        exerciseSelect.addEventListener("change", (event) => {
+            renderLoadChart(event.target.value || null);
+        });
 
-    const weeks =
-        calculateWeeklyFrequency(history, WEEKS_COUNT);
+        const frequencyChart = createFrequencyChart();
+        renderFrequencyChart(frequencyChart, weeks);
 
+        renderRecords(records);
+        renderHistory(historyDesc);
 
-    renderSummary({
-        totalWorkouts: history.length,
-        streak,
-        recordsCount: exerciseEntriesMap.size,
-        totalVolume
-    });
+        // Handler de logout
+        const logoutBtn = document.querySelector(".nav-item.logout");
+        if (logoutBtn) {
+            logoutBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                GymTrackAPI.auth.logout();
+            });
+        }
 
-
-    const exerciseOptions =
-        getExerciseOptions(exerciseEntriesMap);
-
-    populateExerciseSelect(exerciseOptions);
-
-
-    weightChart = createLoadChart();
-
-    renderLoadChart(
-        exerciseOptions.length > 0 ? exerciseOptions[0].key : null
-    );
-
-    exerciseSelect.addEventListener("change", (event) => {
-
-        renderLoadChart(event.target.value || null);
-
-    });
-
-
-    const frequencyChart = createFrequencyChart();
-
-    renderFrequencyChart(frequencyChart, weeks);
-
-
-    renderRecords(records);
-
-    renderHistory(historyDesc);
-
-
-    lucide.createIcons();
+        if (window.lucide) lucide.createIcons();
+    } catch (err) {
+        console.error("Erro ao carregar dados de progresso via API:", err);
+    }
 
 }
-
 
 init();
 

@@ -660,12 +660,12 @@ function buildExercisePreview(workout) {
 
 function renderGreeting() {
 
-    const profile =
-        GymTrackStorage.getProfile();
+    const user =
+        GymTrackAPI.auth.getCurrentUser();
 
     const name =
-        profile && typeof profile.nome === "string"
-            ? profile.nome.trim()
+        user && typeof user.nome === "string"
+            ? user.nome.trim()
             : "";
 
     greetingEl.textContent =
@@ -712,12 +712,12 @@ function getInitials(fullName) {
 
 function renderAvatar() {
 
-    const profile =
-        GymTrackStorage.getProfile();
+    const user =
+        GymTrackAPI.auth.getCurrentUser();
 
     const name =
-        profile && typeof profile.nome === "string"
-            ? profile.nome.trim()
+        user && typeof user.nome === "string"
+            ? user.nome.trim()
             : "";
 
     const initials =
@@ -1058,66 +1058,92 @@ function renderEvolution(evolution) {
    INICIALIZAÇÃO
 ======================================== */
 
-function init() {
+async function init() {
 
-    const workouts =
-        GymTrackStorage.getWorkouts();
+    try {
+        const user = GymTrackAPI.auth.getCurrentUser();
+        const rawWorkouts = await GymTrackAPI.treinos.getAll(user.id);
+        const rawHistory = await GymTrackAPI.execucoes.getAll(user.id);
 
-    const history =
-        GymTrackStorage.getHistory();
+        const workouts = (rawWorkouts || []).map(w => ({
+            ...w,
+            duracaoEstimada: w.duracao_estimada || w.duracaoEstimada || 45,
+            exercicios: (w.exercicios || []).map(e => ({
+                ...e,
+                nome: e.nome || (e.exercicio && e.exercicio.nome) || e.exercicio_nome || "Exercício",
+                series: e.series || e.series_planejadas || 4,
+                repeticoes: e.repeticoes || e.repeticoes_planejadas || 10,
+                carga: e.carga || e.carga_planejada || 0
+            }))
+        }));
 
+        const history = (rawHistory || []).map(item => {
+            const exercicios = (item.exercicios_executados || []).map(ex => {
+                const nome = ex.nome || (ex.exercicio && ex.exercicio.nome) || ex.exercicio_nome || "Exercício";
+                const seriesCount = ex.series_realizadas || 1;
+                return {
+                    nome,
+                    series: Array.from({ length: seriesCount }, () => ({
+                        carga: ex.carga_realizada || 0,
+                        repeticoes: ex.repeticoes_realizadas || 1,
+                        concluida: true
+                    }))
+                };
+            });
 
-    renderGreeting();
+            const dataStr = item.data_execucao ? (item.data_execucao + "T12:00:00") : new Date().toISOString();
 
-    renderAvatar();
+            return {
+                id: item.id,
+                treinoId: item.treino_id,
+                treinoNome: (item.treino && item.treino.nome) || item.treino_nome || "Treino",
+                duracaoSegundos: item.duracao_segundos || 0,
+                realizadoEm: dataStr,
+                exercicios
+            };
+        });
 
+        renderGreeting();
+        renderAvatar();
 
-    const sessionsThisWeek =
-        getSessionsThisWeek(history);
+        const sessionsThisWeek = getSessionsThisWeek(history);
+        const weeklyVolume = calculateWeeklyVolume(sessionsThisWeek);
+        const weeklyDurationSeconds = calculateWeeklyDuration(sessionsThisWeek);
+        const streak = calculateStreak(history);
 
-    const weeklyVolume =
-        calculateWeeklyVolume(sessionsThisWeek);
+        renderSummary({
+            workoutsWeek: sessionsThisWeek.length,
+            weeklyVolume,
+            streak,
+            weeklyDurationSeconds
+        });
 
-    const weeklyDurationSeconds =
-        calculateWeeklyDuration(sessionsThisWeek);
+        renderWeeklyActivity(getWeeklyActivity(history));
 
-    const streak =
-        calculateStreak(history);
+        const suggestedWorkout = getSuggestedWorkout(workouts, history);
+        renderNextWorkout(suggestedWorkout, workouts);
 
+        const lastSession = getLastWorkoutSession(history);
+        renderLastWorkout(lastSession);
 
-    renderSummary({
-        workoutsWeek: sessionsThisWeek.length,
-        weeklyVolume,
-        streak,
-        weeklyDurationSeconds
-    });
+        const evolution = getDashboardEvolution(history);
+        renderEvolution(evolution);
 
+        // Handler de logout
+        const logoutBtn = document.querySelector(".nav-item.logout");
+        if (logoutBtn) {
+            logoutBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                GymTrackAPI.auth.logout();
+            });
+        }
 
-    renderWeeklyActivity(getWeeklyActivity(history));
-
-
-    const suggestedWorkout =
-        getSuggestedWorkout(workouts, history);
-
-    renderNextWorkout(suggestedWorkout, workouts);
-
-
-    const lastSession =
-        getLastWorkoutSession(history);
-
-    renderLastWorkout(lastSession);
-
-
-    const evolution =
-        getDashboardEvolution(history);
-
-    renderEvolution(evolution);
-
-
-    lucide.createIcons();
+        if (window.lucide) lucide.createIcons();
+    } catch (err) {
+        console.error("Erro ao carregar dados do dashboard via API:", err);
+    }
 
 }
-
 
 init();
 

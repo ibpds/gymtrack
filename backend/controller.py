@@ -1,3 +1,4 @@
+# pyrefly: ignore [missing-import]
 from fastapi import APIRouter, Depends, HTTPException, status
 # pyrefly: ignore [missing-import]
 from sqlalchemy.orm import Session
@@ -15,19 +16,45 @@ router = APIRouter()
 def criar_usuario(usuario: schemas.UsuarioCreate, db: Session = Depends(get_db)):
     db_usuario = service.get_usuario_by_email(db, email=usuario.email)
     if db_usuario:
-        raise HTTPException(status_code=400, detail="Email já registrado")
+        raise HTTPException(status_code=400, detail="Email já cadastrado")
     return service.criar_usuario(db=db, usuario=usuario)
 
 @router.get("/usuarios", response_model=List[schemas.Usuario], tags=["Usuários"])
 def listar_usuarios(db: Session = Depends(get_db)):
     return service.get_usuarios(db)
 
+@router.get("/usuarios/{id}", response_model=schemas.Usuario, tags=["Usuários"])
+def buscar_usuario(id: int, db: Session = Depends(get_db)):
+    usuario = service.get_usuario(db, id)
+    if not usuario:
+        raise HTTPException(status_code=404, detail="Usuário não encontrado")
+    return usuario
+
+@router.put("/usuarios/{id}", response_model=schemas.Usuario, tags=["Usuários"])
+def atualizar_usuario(id: int, dados: schemas.UsuarioUpdate, db: Session = Depends(get_db)):
+    usuario = service.update_usuario(db, id, dados)
+    if not usuario:
+        raise HTTPException(status_code=404, detail="Usuário não encontrado")
+    return usuario
+
 @router.post("/login", tags=["Login"])
 def login(login_data: schemas.Login, db: Session = Depends(get_db)):
     usuario = service.get_usuario_by_email(db, login_data.email)
     if not usuario:
-        raise HTTPException(status_code=404, detail="Usuário não encontrado")
-    return {"mensagem": "Login bem-sucedido", "usuario_id": usuario.id, "nome": usuario.nome}
+        raise HTTPException(status_code=404, detail="Usuário não encontrado com este e-mail")
+
+    if login_data.senha and usuario.senha and login_data.senha != usuario.senha:
+        raise HTTPException(status_code=400, detail="Senha incorreta")
+
+    return {
+        "mensagem": "Login bem-sucedido",
+        "usuario_id": usuario.id,
+        "id": usuario.id,
+        "nome": usuario.nome,
+        "email": usuario.email,
+        "objetivo": usuario.objetivo,
+        "nivel": usuario.nivel
+    }
 
 # ====================
 # EXERCÍCIOS
@@ -46,7 +73,24 @@ def buscar_exercicio(id: int, db: Session = Depends(get_db)):
 
 @router.post("/exercicios", response_model=schemas.Exercicio, tags=["Exercícios"])
 def criar_exercicio(exercicio: schemas.ExercicioCreate, db: Session = Depends(get_db)):
+    existente = service.get_exercicio_by_nome(db, exercicio.nome)
+    if existente:
+        return existente
     return service.criar_exercicio(db=db, exercicio=exercicio)
+
+@router.put("/exercicios/{id}", response_model=schemas.Exercicio, tags=["Exercícios"])
+def atualizar_exercicio(id: int, dados: schemas.ExercicioUpdate, db: Session = Depends(get_db)):
+    ex = service.update_exercicio(db, id, dados)
+    if not ex:
+        raise HTTPException(status_code=404, detail="Exercício não encontrado")
+    return ex
+
+@router.delete("/exercicios/{id}", tags=["Exercícios"])
+def remover_exercicio(id: int, db: Session = Depends(get_db)):
+    removido = service.delete_exercicio(db, id)
+    if not removido:
+        raise HTTPException(status_code=404, detail="Exercício não encontrado")
+    return {"mensagem": "Exercício removido com sucesso"}
 
 # ====================
 # TREINOS
@@ -67,12 +111,29 @@ def buscar_treino(id: int, db: Session = Depends(get_db)):
 def criar_treino(treino: schemas.TreinoCreate, db: Session = Depends(get_db)):
     return service.criar_treino(db=db, treino=treino)
 
+@router.put("/treinos/{id}", response_model=schemas.Treino, tags=["Treinos"])
+def atualizar_treino(id: int, dados: schemas.TreinoUpdate, db: Session = Depends(get_db)):
+    treino = service.update_treino(db, id, dados)
+    if not treino:
+        raise HTTPException(status_code=404, detail="Treino não encontrado")
+    return treino
+
+@router.delete("/treinos/{id}", tags=["Treinos"])
+def remover_treino(id: int, db: Session = Depends(get_db)):
+    removido = service.delete_treino(db, id)
+    if not removido:
+        raise HTTPException(status_code=404, detail="Treino não encontrado")
+    return {"mensagem": "Treino removido com sucesso"}
+
 @router.post("/treinos/{id}/exercicios", response_model=schemas.TreinoExercicio, tags=["Treinos"])
 def associar_exercicio_treino(id: int, exercicio: schemas.TreinoExercicioCreate, db: Session = Depends(get_db)):
     db_treino = service.get_treino(db, id)
     if db_treino is None:
         raise HTTPException(status_code=404, detail="Treino não encontrado")
-    return service.add_exercicio_treino(db=db, treino_id=id, exercicio=exercicio)
+    try:
+        return service.add_exercicio_treino(db=db, treino_id=id, exercicio=exercicio)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 # ====================
 # EXECUÇÕES
