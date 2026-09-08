@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual Environment
+venv/
+env/
+.venv/
+.env/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Database
+gymtrack.db
+*.sqlite3
+*.db
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
