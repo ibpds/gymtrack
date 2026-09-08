@@ -1,56 +1,27 @@
-/* ========================================
-   MOCK DO TREINO
+(function () {
 
-   Futuramente estes dados virão da API.
+/* ========================================
+   CARREGAR TREINO DO STORAGE
 ======================================== */
 
-const workout = {
+const urlParams = new URLSearchParams(window.location.search);
 
-    id: 1,
+const workoutId = urlParams.get("id");
 
-    nome: "Pernas & Glúteos",
+const workout =
+    workoutId
+        ? GymTrackStorage.getWorkoutById(workoutId)
+        : null;
 
-    exercicios: [
 
-        {
-            nome: "Agachamento",
-            series: 4,
-            repeticoes: 10,
-            carga: 40,
-            descanso: 60,
-            observacao: "Controle a descida e mantenha a postura."
-        },
+if (!workout) {
 
-        {
-            nome: "Leg press",
-            series: 4,
-            repeticoes: 12,
-            carga: 80,
-            descanso: 60,
-            observacao: "Mantenha os pés firmes na plataforma."
-        },
+    alert("Treino não encontrado.");
 
-        {
-            nome: "Cadeira extensora",
-            series: 3,
-            repeticoes: 12,
-            carga: 35,
-            descanso: 45,
-            observacao: "Evite movimentos muito rápidos."
-        },
+    window.location.href = "treinos.html";
 
-        {
-            nome: "Elevação pélvica",
-            series: 4,
-            repeticoes: 10,
-            carga: 50,
-            descanso: 60,
-            observacao: "Contraia os glúteos no topo do movimento."
-        }
-
-    ]
-
-};
+    return;
+}
 
 
 /* ========================================
@@ -60,6 +31,8 @@ const workout = {
 let currentExerciseIndex = 0;
 
 let workoutSeconds = 0;
+
+let isFinishing = false;
 
 
 /* TIMER DE DESCANSO */
@@ -138,6 +111,9 @@ const dotsContainer =
 
 const finishButton =
     document.getElementById("finish-workout");
+
+const leaveButton =
+    document.getElementById("leave-workout");
 
 const restTimer =
     document.getElementById("rest-timer");
@@ -425,6 +401,30 @@ function updateProgress() {
 
 
 /* ========================================
+   PROGRESSO DA SESSÃO (para o botão Sair)
+======================================== */
+
+function sessaoTemProgresso() {
+
+    return workoutResults.some((result, exerciseIndex) => {
+
+        const originalExercise =
+            workout.exercicios[exerciseIndex];
+
+        return result.series.some((serie) =>
+
+            serie.concluida ||
+            serie.repeticoes !== originalExercise.repeticoes ||
+            serie.carga !== originalExercise.carga
+
+        );
+
+    });
+
+}
+
+
+/* ========================================
    DOTS
 ======================================== */
 
@@ -697,10 +697,41 @@ skipRestButton.addEventListener("click", () => {
 
 
 /* ========================================
+   SAIR DO TREINO
+======================================== */
+
+leaveButton.addEventListener("click", () => {
+
+    if (sessaoTemProgresso()) {
+
+        const confirmLeave =
+            confirm(
+                "Seu progresso neste treino não será salvo. Deseja sair?"
+            );
+
+
+        if (!confirmLeave) {
+            return;
+        }
+
+    }
+
+
+    window.location.href = "treinos.html";
+
+});
+
+
+/* ========================================
    FINALIZAR
 ======================================== */
 
 function finalizarTreino() {
+
+    if (isFinishing) {
+        return;
+    }
+
 
     let totalSeries = 0;
     let completedSeries = 0;
@@ -736,24 +767,37 @@ function finalizarTreino() {
     }
 
 
-    const workoutData = {
+    isFinishing = true;
+
+    finishButton.disabled = true;
+
+
+    const record = {
 
         treinoId: workout.id,
 
+        treinoNome: workout.nome,
+
         duracaoSegundos: workoutSeconds,
 
-        exercicios: workoutResults
+        exercicios: JSON.parse(
+            JSON.stringify(workoutResults)
+        )
 
     };
 
 
+    const session =
+        GymTrackStorage.saveHistory(record);
+
+
     console.log(
-        "Resultado do treino pronto para API:",
-        workoutData
+        "Treino finalizado:",
+        session
     );
 
 
-    alert("Treino finalizado! Mandou bem! 💪");
+    alert("Treino finalizado com sucesso!");
 
 
     window.location.href =
@@ -768,8 +812,6 @@ finishButton.addEventListener(
 );
 
 
-
-
 /* ========================================
    INICIALIZAÇÃO
 ======================================== */
@@ -777,3 +819,5 @@ finishButton.addEventListener(
 renderExercise();
 
 lucide.createIcons();
+
+})();

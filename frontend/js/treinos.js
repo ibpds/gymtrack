@@ -1,84 +1,400 @@
-const workoutsMock = [
-    {
-        id: 1,
-        codigo: "Treino A",
-        nome: "Pernas & Glúteos",
-        quantidadeExercicios: 6,
-        duracao: 55
-    },
+/* ========================================
+   ELEMENTOS
+======================================== */
 
-    {
-        id: 2,
-        codigo: "Treino B",
-        nome: "Peito & Tríceps",
-        quantidadeExercicios: 5,
-        duracao: 50
-    },
+const workoutsGrid =
+    document.getElementById(
+        "workouts-grid"
+    );
 
-    {
-        id: 3,
-        codigo: "Treino C",
-        nome: "Costas & Bíceps",
-        quantidadeExercicios: 6,
-        duracao: 60
+const workoutsCount =
+    document.getElementById(
+        "workouts-count"
+    );
+
+
+/* ========================================
+   RENDERIZAR TREINOS
+======================================== */
+
+function renderWorkouts() {
+
+    const workouts =
+        GymTrackStorage.getWorkouts();
+
+
+    workoutsGrid.innerHTML = "";
+
+
+    workoutsCount.textContent =
+        `${workouts.length} ${
+            workouts.length === 1
+                ? "treino"
+                : "treinos"
+        }`;
+
+
+    if (workouts.length === 0) {
+
+        workoutsGrid.innerHTML = `
+
+            <div class="workouts-empty">
+
+                <i data-lucide="dumbbell"></i>
+
+                <h3>
+                    Nenhum treino criado
+                </h3>
+
+                <p>
+                    Crie sua primeira ficha para começar.
+                </p>
+
+                <a
+                    href="treino-form.html"
+                    class="new-workout-btn"
+                >
+                    <i data-lucide="plus"></i>
+                    Novo treino
+                </a>
+
+            </div>
+
+        `;
+
+
+        lucide.createIcons();
+
+        return;
     }
-];
 
 
-function atualizarQuantidadeTreinos() {
+    workouts.forEach(
+        (workout, index) => {
 
-    const workoutCount =
-        document.getElementById("workout-count");
+            const card =
+                createWorkoutCard(
+                    workout,
+                    index
+                );
 
-    workoutCount.textContent =
-        `${workoutsMock.length} treinos`;
+
+            workoutsGrid.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    addWorkoutEvents();
+
+    lucide.createIcons();
+
 }
 
-const menuButtons = document.querySelectorAll(".workout-menu");
 
-menuButtons.forEach((button) => {
+/* ========================================
+   CRIAR CARD
+======================================== */
 
-    button.addEventListener("click", (event) => {
+function createWorkoutCard(
+    workout,
+    index
+) {
 
-        event.stopPropagation();
-
-        const dropdown =
-            button.parentElement.querySelector(".workout-dropdown");
-
-        // Fecha os outros menus
-        document
-            .querySelectorAll(".workout-dropdown")
-            .forEach((menu) => {
-
-                if (menu !== dropdown) {
-                    menu.classList.remove("open");
-                }
-
-            });
-
-        dropdown.classList.toggle("open");
-
-        button.setAttribute(
-            "aria-expanded",
-            dropdown.classList.contains("open")
+    const article =
+        document.createElement(
+            "article"
         );
-    });
-
-});
 
 
-// Fecha o menu ao clicar fora
-document.addEventListener("click", () => {
-
-    document
-        .querySelectorAll(".workout-dropdown")
-        .forEach((menu) => {
-            menu.classList.remove("open");
-        });
-
-});
+    article.className =
+        "workout-card";
 
 
-atualizarQuantidadeTreinos();
+    const preview =
+        workout.exercicios
+            .slice(0, 3)
+            .map(
+                exercise =>
+                    `<span>${exercise.nome}</span>`
+            )
+            .join("");
 
-lucide.createIcons();
+
+    const remaining =
+        workout.exercicios.length - 3;
+
+
+    article.innerHTML = `
+
+        <div class="workout-card-header">
+
+            <span class="workout-label">
+                TREINO ${getWorkoutLetter(index)}
+            </span>
+
+
+            <div class="workout-actions">
+
+                <button
+                    type="button"
+                    class="workout-menu"
+                    aria-label="Opções do treino"
+                >
+                    <i data-lucide="ellipsis-vertical"></i>
+                </button>
+
+
+                <div class="workout-dropdown">
+
+                    <a
+                        href="treino-form.html?id=${workout.id}"
+                        class="dropdown-item"
+                    >
+                        <i data-lucide="pencil"></i>
+                        Editar
+                    </a>
+
+
+                    <button
+                        type="button"
+                        class="dropdown-item delete"
+                        data-delete-id="${workout.id}"
+                    >
+                        <i data-lucide="trash-2"></i>
+                        Excluir
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="workout-card-title">
+
+            <h3>
+                ${workout.nome}
+            </h3>
+
+            <p>
+                ${workout.descricao ||
+                "Sem descrição."}
+            </p>
+
+        </div>
+
+
+        <div class="workout-info">
+
+            <span>
+                <i data-lucide="list"></i>
+
+                ${workout.exercicios.length}
+                ${
+                    workout.exercicios.length === 1
+                        ? "exercício"
+                        : "exercícios"
+                }
+            </span>
+
+
+            <span>
+                <i data-lucide="clock"></i>
+
+                ~${workout.duracaoEstimada || 0} min
+            </span>
+
+        </div>
+
+
+        <div class="exercise-preview">
+
+            ${preview}
+
+            ${
+                remaining > 0
+                    ? `
+                        <span class="more-exercises">
+                            +${remaining} ${
+                                remaining === 1
+                                    ? "exercício"
+                                    : "exercícios"
+                            }
+                        </span>
+                    `
+                    : ""
+            }
+
+        </div>
+
+
+        <a
+            href="realizar-treino.html?id=${workout.id}"
+            class="workout-start"
+        >
+            <i data-lucide="play"></i>
+            Iniciar treino
+        </a>
+
+    `;
+
+
+    return article;
+
+}
+
+
+/* ========================================
+   LETRA DO TREINO
+======================================== */
+
+function getWorkoutLetter(index) {
+
+    return String.fromCharCode(
+        65 + index
+    );
+
+}
+
+
+/* ========================================
+   EVENTOS
+======================================== */
+
+function addWorkoutEvents() {
+
+    const menuButtons =
+        document.querySelectorAll(
+            ".workout-menu"
+        );
+
+
+    menuButtons.forEach(
+        (button) => {
+
+            button.addEventListener(
+                "click",
+                (event) => {
+
+                    event.stopPropagation();
+
+
+                    const dropdown =
+                        button.nextElementSibling;
+
+
+                    document
+                        .querySelectorAll(
+                            ".workout-dropdown.open"
+                        )
+                        .forEach(
+                            item => {
+
+                                if (
+                                    item !== dropdown
+                                ) {
+                                    item.classList.remove(
+                                        "open"
+                                    );
+                                }
+
+                            }
+                        );
+
+
+                    dropdown.classList.toggle(
+                        "open"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    const deleteButtons =
+        document.querySelectorAll(
+            "[data-delete-id]"
+        );
+
+
+    deleteButtons.forEach(
+        (button) => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const id =
+                        button.dataset.deleteId;
+
+
+                    const workout =
+                        GymTrackStorage
+                            .getWorkoutById(id);
+
+
+                    if (!workout) {
+                        return;
+                    }
+
+
+                    const confirmed =
+                        confirm(
+                            `Excluir o treino "${workout.nome}"?`
+                        );
+
+
+                    if (!confirmed) {
+                        return;
+                    }
+
+
+                    GymTrackStorage
+                        .deleteWorkout(id);
+
+
+                    renderWorkouts();
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* ========================================
+   FECHAR MENU
+======================================== */
+
+document.addEventListener(
+    "click",
+    () => {
+
+        document
+            .querySelectorAll(
+                ".workout-dropdown.open"
+            )
+            .forEach(
+                dropdown =>
+                    dropdown.classList.remove(
+                        "open"
+                    )
+            );
+
+    }
+);
+
+
+/* ========================================
+   INICIALIZAÇÃO
+======================================== */
+
+renderWorkouts();

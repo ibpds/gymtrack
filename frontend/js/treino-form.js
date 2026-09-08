@@ -6,15 +6,45 @@ const emptyAddButton = document.getElementById("empty-add-exercise");
 
 const workoutForm = document.getElementById("workout-form");
 
+const pageEyebrow = document.getElementById("page-eyebrow");
+const pageTitle = document.getElementById("page-title");
+const pageDescription = document.getElementById("page-description");
+const saveBtnText = document.getElementById("save-btn-text");
+
 
 let exerciseCounter = 0;
+
+
+/* ========================================
+   MODO EDIÇÃO
+======================================== */
+
+const urlParams = new URLSearchParams(window.location.search);
+
+const editingWorkoutId = urlParams.get("id");
+
+
+/* ========================================
+   UTILITÁRIOS
+======================================== */
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+}
 
 
 /* ========================================
    ADICIONAR EXERCÍCIO
 ======================================== */
 
-function adicionarExercicio() {
+function adicionarExercicio(exerciseData = null, shouldFocus = true) {
 
     exerciseCounter++;
 
@@ -32,7 +62,7 @@ function adicionarExercicio() {
 
             <div class="exercise-title">
                 <span>EXERCÍCIO</span>
-                <strong>Novo exercício</strong>
+                <strong>${escapeHtml(exerciseData?.nome?.trim()) || "Novo exercício"}</strong>
             </div>
 
             <button
@@ -58,6 +88,7 @@ function adicionarExercicio() {
                     type="text"
                     class="exercise-name"
                     placeholder="Ex.: Agachamento"
+                    value="${escapeHtml(exerciseData?.nome)}"
                     required
                 >
 
@@ -75,6 +106,7 @@ function adicionarExercicio() {
                     class="exercise-series"
                     min="1"
                     placeholder="4"
+                    value="${escapeHtml(exerciseData?.series)}"
                     required
                 >
 
@@ -92,6 +124,7 @@ function adicionarExercicio() {
                     class="exercise-reps"
                     min="1"
                     placeholder="10"
+                    value="${escapeHtml(exerciseData?.repeticoes)}"
                     required
                 >
 
@@ -112,6 +145,7 @@ function adicionarExercicio() {
                         min="0"
                         step="0.5"
                         placeholder="40"
+                        value="${escapeHtml(exerciseData?.carga)}"
                     >
 
                     <span>kg</span>
@@ -134,6 +168,7 @@ function adicionarExercicio() {
                         class="exercise-rest"
                         min="0"
                         placeholder="60"
+                        value="${escapeHtml(exerciseData?.descanso)}"
                     >
 
                     <span>seg</span>
@@ -154,6 +189,7 @@ function adicionarExercicio() {
                     type="text"
                     class="exercise-notes"
                     placeholder="Ex.: aumentar carga na próxima sessão"
+                    value="${escapeHtml(exerciseData?.observacao)}"
                 >
 
             </div>
@@ -205,7 +241,9 @@ function adicionarExercicio() {
 
     /* Coloca cursor no exercício novo */
 
-    nameInput.focus();
+    if (shouldFocus) {
+        nameInput.focus();
+    }
 }
 
 
@@ -244,14 +282,63 @@ function atualizarExercicios() {
 
 addExerciseButton.addEventListener(
     "click",
-    adicionarExercicio
+    () => adicionarExercicio()
 );
 
 
 emptyAddButton.addEventListener(
     "click",
-    adicionarExercicio
+    () => adicionarExercicio()
 );
+
+
+/* ========================================
+   CARREGAR TREINO PARA EDIÇÃO
+======================================== */
+
+function carregarTreinoParaEdicao() {
+
+    const workout =
+        GymTrackStorage.getWorkoutById(editingWorkoutId);
+
+
+    if (!workout) {
+
+        alert("Treino não encontrado.");
+
+        window.location.href = "treinos.html";
+
+        return;
+    }
+
+
+    pageEyebrow.textContent = "EDITAR TREINO";
+
+    pageTitle.textContent = "Editar treino";
+
+    pageDescription.textContent =
+        "Atualize as informações e exercícios da sua ficha.";
+
+    saveBtnText.textContent = "Salvar alterações";
+
+
+    document.getElementById("workout-name").value =
+        workout.nome || "";
+
+    document.getElementById("workout-description").value =
+        workout.descricao || "";
+
+    document.getElementById("workout-duration").value =
+        workout.duracaoEstimada ?? "";
+
+
+    (workout.exercicios || []).forEach((exercicio) => {
+
+        adicionarExercicio(exercicio, false);
+
+    });
+
+}
 
 
 /* ========================================
@@ -283,7 +370,7 @@ workoutForm.addEventListener("submit", (event) => {
                 nome:
                     exercise.querySelector(
                         ".exercise-name"
-                    ).value,
+                    ).value.trim(),
 
                 series:
                     Number(
@@ -316,7 +403,7 @@ workoutForm.addEventListener("submit", (event) => {
                 observacao:
                     exercise.querySelector(
                         ".exercise-notes"
-                    ).value
+                    ).value.trim()
 
             };
 
@@ -328,12 +415,12 @@ workoutForm.addEventListener("submit", (event) => {
         nome:
             document.getElementById(
                 "workout-name"
-            ).value,
+            ).value.trim(),
 
         descricao:
             document.getElementById(
                 "workout-description"
-            ).value,
+            ).value.trim(),
 
         duracaoEstimada:
             Number(
@@ -347,7 +434,44 @@ workoutForm.addEventListener("submit", (event) => {
     };
 
 
-    console.log("Treino pronto para API:", workout);
+    if (editingWorkoutId) {
+
+        const updatedWorkout =
+            GymTrackStorage.updateWorkout(
+                editingWorkoutId,
+                workout
+            );
+
+        console.log(
+            "Treino atualizado:",
+            updatedWorkout
+        );
+
+        alert(
+            "Treino atualizado com sucesso!"
+        );
+
+    } else {
+
+        const savedWorkout =
+            GymTrackStorage.saveWorkout(
+                workout
+            );
+
+        console.log(
+            "Treino salvo:",
+            savedWorkout
+        );
+
+        alert(
+            "Treino criado com sucesso!"
+        );
+
+    }
+
+
+    window.location.href =
+        "treinos.html";
 
 
     /*
@@ -359,13 +483,21 @@ workoutForm.addEventListener("submit", (event) => {
         });
     */
 
-
-    alert("Treino criado com sucesso!");
-
-window.location.href = "treinos.html";
-
 });
 
-atualizarExercicios();
+
+/* ========================================
+   INICIALIZAÇÃO
+======================================== */
+
+if (editingWorkoutId) {
+
+    carregarTreinoParaEdicao();
+
+} else {
+
+    atualizarExercicios();
+
+}
 
 lucide.createIcons();

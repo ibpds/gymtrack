@@ -168,23 +168,7 @@
 
                         <i data-lucide="dumbbell"></i>
 
-                        <select id="exercise-select">
-                            <option value="agachamento">
-                                Agachamento
-                            </option>
-
-                            <option value="legpress">
-                                Leg press
-                            </option>
-
-                            <option value="supino">
-                                Supino reto
-                            </option>
-
-                            <option value="remada">
-                                Remada baixa
-                            </option>
-                        </select>
+                        <select id="exercise-select"></select>
 
                         <i data-lucide="chevron-down"></i>
 
@@ -213,8 +197,22 @@
                     </div>
 
 
-                    <div class="main-chart-container">
+                    <div class="main-chart-container" id="load-chart-container">
+
                         <canvas id="weight-chart"></canvas>
+
+                        <div class="chart-empty-state" id="load-chart-empty" hidden>
+
+                            <i data-lucide="line-chart"></i>
+
+                            <strong>Sem dados de carga ainda</strong>
+
+                            <span>
+                                Finalize um treino com séries concluídas para acompanhar sua evolução aqui.
+                            </span>
+
+                        </div>
+
                     </div>
 
                 </article>
@@ -262,80 +260,7 @@
                     </div>
 
 
-                    <article class="records-card">
-
-                        <div class="record-item">
-
-                            <div class="record-icon">
-                                <i data-lucide="trophy"></i>
-                            </div>
-
-                            <div class="record-info">
-                                <strong>Agachamento</strong>
-                                <span>Melhor carga</span>
-                            </div>
-
-                            <strong class="record-value">
-                                60 kg
-                            </strong>
-
-                        </div>
-
-
-                        <div class="record-item">
-
-                            <div class="record-icon">
-                                <i data-lucide="trophy"></i>
-                            </div>
-
-                            <div class="record-info">
-                                <strong>Leg press</strong>
-                                <span>Melhor carga</span>
-                            </div>
-
-                            <strong class="record-value">
-                                100 kg
-                            </strong>
-
-                        </div>
-
-
-                        <div class="record-item">
-
-                            <div class="record-icon">
-                                <i data-lucide="trophy"></i>
-                            </div>
-
-                            <div class="record-info">
-                                <strong>Supino reto</strong>
-                                <span>Melhor carga</span>
-                            </div>
-
-                            <strong class="record-value">
-                                40 kg
-                            </strong>
-
-                        </div>
-
-
-                        <div class="record-item">
-
-                            <div class="record-icon">
-                                <i data-lucide="trophy"></i>
-                            </div>
-
-                            <div class="record-info">
-                                <strong>Remada baixa</strong>
-                                <span>Melhor carga</span>
-                            </div>
-
-                            <strong class="record-value">
-                                55 kg
-                            </strong>
-
-                        </div>
-
-                    </article>
+                    <article class="records-card" id="records-list"></article>
 
                 </div>
 
@@ -355,95 +280,7 @@
                 </div>
 
 
-                <article class="history-card">
-
-                    <div class="history-item">
-
-                        <div class="history-icon">
-                            <i data-lucide="dumbbell"></i>
-                        </div>
-
-                        <div class="history-workout">
-                            <strong>Pernas & Glúteos</strong>
-                            <span>Hoje, 08:32</span>
-                        </div>
-
-                        <div class="history-data">
-                            <span>DURAÇÃO</span>
-                            <strong>52 min</strong>
-                        </div>
-
-                        <div class="history-data">
-                            <span>EXERCÍCIOS</span>
-                            <strong>6</strong>
-                        </div>
-
-                        <div class="history-status">
-                            <i data-lucide="check"></i>
-                            Concluído
-                        </div>
-
-                    </div>
-
-
-                    <div class="history-item">
-
-                        <div class="history-icon">
-                            <i data-lucide="dumbbell"></i>
-                        </div>
-
-                        <div class="history-workout">
-                            <strong>Peito & Tríceps</strong>
-                            <span>01 set, 18:40</span>
-                        </div>
-
-                        <div class="history-data">
-                            <span>DURAÇÃO</span>
-                            <strong>48 min</strong>
-                        </div>
-
-                        <div class="history-data">
-                            <span>EXERCÍCIOS</span>
-                            <strong>5</strong>
-                        </div>
-
-                        <div class="history-status">
-                            <i data-lucide="check"></i>
-                            Concluído
-                        </div>
-
-                    </div>
-
-
-                    <div class="history-item">
-
-                        <div class="history-icon">
-                            <i data-lucide="dumbbell"></i>
-                        </div>
-
-                        <div class="history-workout">
-                            <strong>Costas & Bíceps</strong>
-                            <span>30 ago, 09:15</span>
-                        </div>
-
-                        <div class="history-data">
-                            <span>DURAÇÃO</span>
-                            <strong>57 min</strong>
-                        </div>
-
-                        <div class="history-data">
-                            <span>EXERCÍCIOS</span>
-                            <strong>6</strong>
-                        </div>
-
-                        <div class="history-status">
-                            <i data-lucide="check"></i>
-                            Concluído
-                        </div>
-
-                    </div>
-
-                </article>
+                <article class="history-card" id="history-list"></article>
 
             </section>
 
@@ -454,6 +291,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/storage.js"></script>
     <script src="../js/progresso.js"></script>
 
 </body>

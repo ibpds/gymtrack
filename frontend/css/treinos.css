@@ -1617,6 +1617,10 @@
     align-items: center;
     gap: 7px;
 
+    background: none;
+    border: none;
+    padding: 0;
+
     color: var(--color-text-secondary);
 
     font-size: 0.67rem;
@@ -1824,4 +1828,57 @@
 .skip-rest-btn svg {
     width: 12px;
     height: 12px;
+}
+
+/* ========================================
+   EMPTY WORKOUTS
+======================================== */
+
+.workouts-empty {
+    min-height: 300px;
+
+    grid-column: 1 / -1;
+
+    padding: 45px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-md);
+
+    background: rgba(21, 24, 29, 0.4);
+
+    text-align: center;
+}
+
+
+.workouts-empty > svg {
+    width: 28px;
+    height: 28px;
+
+    margin-bottom: 15px;
+
+    color: var(--color-primary);
+}
+
+
+.workouts-empty h3 {
+    font-size: 0.9rem;
+}
+
+
+.workouts-empty p {
+    margin-top: 6px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 0.7rem;
+}
+
+
+.workouts-empty .new-workout-btn {
+    margin-top: 20px;
 }

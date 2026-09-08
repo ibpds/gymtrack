@@ -299,6 +299,48 @@
 }
 
 
+.chart-empty-state {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    padding: 0 30px;
+
+    text-align: center;
+
+    background: var(--color-surface);
+}
+
+
+.chart-empty-state svg {
+    width: 24px;
+    height: 24px;
+
+    margin-bottom: 4px;
+
+    color: var(--color-primary);
+}
+
+
+.chart-empty-state strong {
+    font-size: 0.78rem;
+}
+
+
+.chart-empty-state span {
+    max-width: 260px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 0.65rem;
+}
+
+
 /* ========================================
    SECONDARY GRID
 ======================================== */
@@ -551,4 +593,45 @@
 .history-status svg {
     width: 13px;
     height: 13px;
+}
+
+
+/* ========================================
+   EMPTY STATES (records / history)
+======================================== */
+
+.progress-empty {
+    padding: 40px 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    text-align: center;
+}
+
+
+.progress-empty svg {
+    width: 24px;
+    height: 24px;
+
+    margin-bottom: 4px;
+
+    color: var(--color-primary);
+}
+
+
+.progress-empty strong {
+    font-size: 0.78rem;
+}
+
+
+.progress-empty span {
+    max-width: 240px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 0.65rem;
 }

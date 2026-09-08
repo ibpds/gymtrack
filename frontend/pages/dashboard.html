@@ -86,8 +86,8 @@
                         DASHBOARD
                     </span>
 
-                    <h1>
-                        Olá, <span id="user-name">Izabela</span>!
+                    <h1 id="dashboard-greeting">
+                        Olá!
                     </h1>
 
                     <p>
@@ -100,10 +100,9 @@
                 <a
                     href="perfil.html"
                     class="user-avatar"
+                    id="user-avatar"
                     aria-label="Acessar perfil"
-                >
-                    IZ
-                </a>
+                ></a>
 
             </header>
 
@@ -146,16 +145,16 @@
                     <article class="stat-card">
 
                         <div class="stat-icon">
-                            <i data-lucide="calendar-days"></i>
+                            <i data-lucide="weight"></i>
                         </div>
 
                         <div>
-                            <strong id="workouts-month">
-                                12
+                            <strong id="weekly-volume">
+                                0 kg
                             </strong>
 
                             <span>
-                                Treinos no mês
+                                Volume desta semana
                             </span>
                         </div>
 
@@ -186,16 +185,16 @@
                     <article class="stat-card">
 
                         <div class="stat-icon">
-                            <i data-lucide="trophy"></i>
+                            <i data-lucide="timer"></i>
                         </div>
 
                         <div>
-                            <strong id="personal-records">
-                                5
+                            <strong id="weekly-duration">
+                                0 min
                             </strong>
 
                             <span>
-                                Recordes pessoais
+                                Tempo treinado esta semana
                             </span>
                         </div>
 
@@ -232,64 +231,7 @@
                     </div>
 
 
-                    <article class="next-workout-card">
-
-                        <div class="workout-top">
-
-                            <span class="workout-tag">
-                                PRÓXIMO
-                            </span>
-
-                            <span class="workout-code">
-                                TREINO A
-                            </span>
-
-                        </div>
-
-
-                        <div class="workout-content">
-
-                            <h3>
-                                Pernas & Glúteos
-                            </h3>
-
-                            <p>
-                                Agachamento, leg press, cadeira extensora
-                                e mais 3 exercícios.
-                            </p>
-
-                        </div>
-
-
-                        <div class="workout-meta">
-
-                            <span>
-                                <i data-lucide="list-checks"></i>
-                                6 exercícios
-                            </span>
-
-                            <span class="meta-divider"></span>
-
-                            <span>
-                                <i data-lucide="clock"></i>
-                                ~55 min
-                            </span>
-
-                        </div>
-
-
-                        <a
-                            href="realizar-treino.html"
-                            class="start-workout-btn"
-                        >
-                            <i data-lucide="play"></i>
-
-                            <span>
-                                Iniciar treino
-                            </span>
-                        </a>
-
-                    </article>
+                    <article class="next-workout-card" id="next-workout-card"></article>
 
                 </div>
 
@@ -309,91 +251,13 @@
 
                     <article class="week-card">
 
-                        <div class="week-days">
-
-
-                            
-                            <div class="day completed">
-
-                                <span>S</span>
-
-                                <div>
-                                    <i data-lucide="check"></i>
-                                </div>
-
-                            </div>
-
-
-                             
-                            <div class="day completed">
-
-                                <span>T</span>
-
-                                <div>
-                                    <i data-lucide="check"></i>
-                                </div>
-
-                            </div>
-
-
-                            
-                            <div class="day">
-
-                                <span>Q</span>
-
-                                <div></div>
-
-                            </div>
-
-
-                            
-                            <div class="day completed">
-
-                                <span>Q</span>
-
-                                <div>
-                                    <i data-lucide="check"></i>
-                                </div>
-
-                            </div>
-
-
-                            
-                            <div class="day">
-
-                                <span>S</span>
-
-                                <div></div>
-
-                            </div>
-
-
-                            
-                            <div class="day">
-
-                                <span>S</span>
-
-                                <div></div>
-
-                            </div>
-
-
-                            
-                            <div class="day">
-
-                                <span>D</span>
-
-                                <div></div>
-
-                            </div>
-
-                        </div>
+                        <div class="week-days" id="week-days"></div>
 
 
                         <div class="week-summary">
 
-                            <strong>
-                                3 treinos
+                            <strong id="week-summary-count">
+                                0 treinos
                             </strong>
 
                             <span>
@@ -403,6 +267,16 @@
                         </div>
 
                     </article>
+
+
+                    <div class="section-heading last-workout-heading">
+                        <h2>
+                            Último treino
+                        </h2>
+                    </div>
+
+
+                    <article class="last-workout-card" id="last-workout-card"></article>
 
                 </div>
 
@@ -422,8 +296,8 @@
                             Evolução recente
                         </h2>
 
-                        <p>
-                            Seu progresso no agachamento
+                        <p id="evolution-subtitle">
+                            Seu progresso mais recente
                         </p>
                     </div>
 
@@ -435,60 +309,7 @@
                 </div>
 
 
-                <article class="progress-card">
-
-                    <div class="progress-header">
-
-                        <div>
-
-                            <span class="progress-exercise">
-                                Agachamento
-                            </span>
-
-                            <strong>
-                                60 kg
-                            </strong>
-
-                        </div>
-
-
-                        <span class="progress-growth">
-
-                            <i data-lucide="trending-up"></i>
-
-                            +10 kg
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="chart-placeholder">
-
-                        <div class="chart-line">
-
-                            <span class="point point-1"></span>
-                            <span class="point point-2"></span>
-                            <span class="point point-3"></span>
-                            <span class="point point-4"></span>
-                            <span class="point point-5"></span>
-
-                        </div>
-
-
-                        <div class="chart-labels">
-
-                            <span>Mai</span>
-                            <span>Jun</span>
-                            <span>Jul</span>
-                            <span>Ago</span>
-                            <span>Set</span>
-
-                        </div>
-
-                    </div>
-
-                </article>
+                <article class="progress-card" id="evolution-card"></article>
 
             </section>
 
@@ -502,6 +323,8 @@
     ========================================= -->
 
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script src="../js/storage.js"></script>
 
     <script src="../js/dashboard.js"></script>
 
